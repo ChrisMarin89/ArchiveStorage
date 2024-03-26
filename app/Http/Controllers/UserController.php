@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if(is_null($request)){
-            $users = User::all()->paginate(10);
+            $users = User::all()->orderBy('email', 'asc')->paginate(15);
             return view('users.index', ['users' => $users]);
         }else{
             $search['name'] = trim($request->get('name'));
@@ -36,8 +36,8 @@ class UserController extends Controller
             $users = User::where('name', 'LIKE', $search['name'])
                         ->where('lastname', 'LIKE', $search['lastname'])
                         ->where('email', 'LIKE', $search['email'])
-                        ->orderBy('id', 'asc')
-                        ->paginate(10);
+                        ->orderBy('email', 'asc')
+                        ->paginate(15);
 
             if($search['name'] == '%') $search['name'] = '';
             else $search['name'] = str_replace('%', '*', $search['name']);

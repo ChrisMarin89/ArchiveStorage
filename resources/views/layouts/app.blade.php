@@ -16,12 +16,17 @@
         <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
         <!-- Theme style -->
         <link rel="stylesheet" href="{{asset('dist/css/adminlte.css')}}">
+        <!-- DualListBox -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="{{asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js')}}"></script>
+        <link rel="stylesheet" href="{{asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.css')}}">
+        
     </head>
     <body class="hold-transition sidebar-mini">
         <div id="app">
             <div class="wrapper">
                 <!-- Navbar -->
-                <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                <nav class="main-header navbar navbar-expand navbar-dark bg-dark">
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -31,11 +36,7 @@
                     <!-- Right navbar links -->
                     <ul class="navbar-nav ml-auto">
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                                <i class="fas fa-expand-arrows-alt"></i>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                                 <i class="fas fa-th-large"></i>
@@ -45,7 +46,7 @@
                         <li class="nav-item dropdown">
                             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="nav-link dropdown-toggle">
                             <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="brand-image img-circle elevation-3" width="32" height="32">
-                                {{ Auth::user()->name }}
+                                {{ Auth::user()->name . ' ' . Auth::user()->lastname}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <a class="dropdown-item" href="#">
@@ -81,7 +82,7 @@
                 <!-- /.navbar -->
                 
                 <!-- Main Sidebar Container -->
-                <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <aside class="main-sidebar sidebar-dark-primary">
                     <!-- Brand Logo -->
                     <a href="{{ url('/') }}" class="brand-link">
                         <img src="{{ asset('dist/img/ArchiveServerLogo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
