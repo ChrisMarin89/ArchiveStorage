@@ -24,13 +24,14 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col-1"></div>
+        <div class="col-10">
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
-                            <th scope="col" class="text-right">
+                            <th scope="col" class="text-right"  >
                                 Options
                                 <a href="{{route('roles.create')}}">
                                     <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-plus"></i></button>
@@ -65,6 +66,7 @@
                 </div>
             </div>
         </div>
+        <div class="col-1"></div>
     </div>
 </div>
 

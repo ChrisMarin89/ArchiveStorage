@@ -13,18 +13,18 @@ class RoleAndPermissionSeeder extends Seeder
         /***--PERMISSIONS--***/
         Permission::create(['name' => 'app-super-admin']);
         //Users
-        Permission::create(['name' => 'app-create-users']);
-        Permission::create(['name' => 'app-read-users']);
-        Permission::create(['name' => 'app-update-users']);
-        Permission::create(['name' => 'app-delete-users']);
+        Permission::create(['name' => 'app-users-create']);
+        Permission::create(['name' => 'app-users-read']);
+        Permission::create(['name' => 'app-users-update']);
+        Permission::create(['name' => 'app-users-delete']);
         //Permission
-        Permission::create(['name' => 'app-create-permissions']);
-        Permission::create(['name' => 'app-read-permissions']);
-        Permission::create(['name' => 'app-update-permissions']);
-        Permission::create(['name' => 'app-delete-permissions']);
+        Permission::create(['name' => 'app-permissions-create']);
+        Permission::create(['name' => 'app-permissions-read']);
+        Permission::create(['name' => 'app-permissions-update']);
+        Permission::create(['name' => 'app-permissions-delete']);
         //Roles
-        Permission::create(['name' => 'app-read-roles']);
-        Permission::create(['name' => 'app-update-roles']);
+        Permission::create(['name' => 'app-roles-read']);
+        Permission::create(['name' => 'app-roles-update']);
 
         /***--ROLES--***/
         $superAdminRole = Role::create(['name' => 'SuperAdmin']); // GATE Auth returns "true" for all permissions //
@@ -38,30 +38,30 @@ class RoleAndPermissionSeeder extends Seeder
             'app-super-admin',
         ]);
         $adminRole->givePermissionTo([
-            'app-create-users',
-            'app-read-users',
-            'app-update-users',
-            'app-delete-users',
-            'app-create-permissions',
-            'app-read-permissions',
-            'app-update-permissions',
-            'app-delete-permissions',
-            'app-read-roles',
-            'app-update-roles',
+            'app-users-create',
+            'app-users-read',
+            'app-users-update',
+            'app-users-delete',
+            'app-permissions-create',
+            'app-permissions-read',
+            'app-permissions-update',
+            'app-permissions-delete',
+            'app-roles-read',
+            'app-roles-update',
         ]);
         $managerRole->givePermissionTo([
-            'app-create-users',
-            'app-read-users',
-            'app-update-users',
-            'app-delete-users',
-            'app-read-permissions',
-            'app-update-permissions',
-            'app-read-roles',
+            'app-users-create',
+            'app-users-read',
+            'app-users-update',
+            'app-users-delete',
+            'app-permissions-read',
+            'app-permissions-update',
+            'app-roles-read',
         ]);
         $collabRole->givePermissionTo([
-            'app-read-users',
-            'app-read-permissions',
-            'app-read-roles',
+            'app-users-read',
+            'app-permissions-read',
+            'app-roles-read',
         ]);
         //$userRole->givePermissionTo([]);
     }

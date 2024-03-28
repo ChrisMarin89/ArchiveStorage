@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserFormRequest;
 use App\Models\User;
+use App\Models\Permission;
+
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -97,7 +99,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('users.edit', ['user' => User::findOrFail($id)]); 
+        $permissions = Permission::all();
+        $permissions_except_app = array();
+        /*
+        foreach($permissions as $permission){
+            if(!str_starts_with($permission->name, 'app-')) $permissions_except_app[] = $permission;
+        }
+        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app]);
+        */
+        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions]);
     }
 
     /**
@@ -113,6 +123,9 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
+
+        if(!is_null($request->get('permissions'))) $user->syncPermissions($request->get('permissions'));
+        else foreach($user->getPermissionNames() as $revoved_permission) $user->revokePermissionTo($revoved_permission);
 
         $user->update();
         return redirect('/users');

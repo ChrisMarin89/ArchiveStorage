@@ -24,7 +24,8 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col-1"></div>
+        <div class="col-10">
             <div class="table-responsive">
                 <table class="table table-hover table-sm table-striped">
                     <thead>
@@ -94,12 +95,14 @@
                     </tbody>
                 </table>
             </div>
+            
             <div class="row">
                 <div class="mx-auto">
                     {{$users->links()}}
                 </div>
             </div>
         </div>
+        <div class="col-1"></div>
     </div>
 </div>
 

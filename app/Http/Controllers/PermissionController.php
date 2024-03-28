@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PermissionFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Permission;
+use App\Models\User;
 
 class PermissionController extends Controller
 {
@@ -86,7 +87,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        return view('permissions.edit', ['permission' => Permission::findOrFail($id)]); 
+        return view('permissions.edit', ['permission' => Permission::findOrFail($id), 'users' => User::all()]); 
     }
 
     /**
@@ -99,7 +100,17 @@ class PermissionController extends Controller
     public function update(PermissionFormRequest $request, $id)
     {
         $permission = Permission::findOrFail($id);
-        $permission->name = $request->get('name');
+        // The name cannot be changed in Spatie Permissions (Create or Delete Permission only)
+        //$permission->name = $request->get('name');
+        $users = USER::all();
+        
+        foreach ($users as $user) $user->revokePermissionTo($permission->name);
+        if(!is_null($request->get('users'))){
+            foreach($request->get('users') as $user_id){
+                $user = USER::findOrFail($user_id);
+                if(!$user->hasPermissionTo($permission->name)) $user->givePermissionTo($permission->name);
+            }
+        }
 
         $permission->update();
         return redirect('/permissions');

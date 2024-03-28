@@ -27,7 +27,6 @@
     <!-- /.content-header -->
 
     <div class="container-fluid">
-
         <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -52,10 +51,9 @@
                         <div class="chartjs-size-monitor">
                             <div class="mb-3">
                                 <div class="form-group row">
-                                    <div class="col-1">
+                                    <div class="col-2">
                                         <label for="name" class="form-label">Name</label>
                                     </div>
-                                    <div class="col-1"></div>
                                     <div class="col-2">
                                         <input type="text" class="form-control" name="name" value="{{$user->name}}" placeholder="Type your name.">
                                     </div>
@@ -63,10 +61,9 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-group row">
-                                    <div class="col-1">
+                                    <div class="col-2">
                                         <label for="lastname" class="form-label">Lastname</label>
                                     </div>
-                                    <div class="col-1"></div>
                                     <div class="col-2">
                                         <input type="text" class="form-control" name="lastname" value="{{$user->lastname}}" placeholder="Type your lastname.">
                                     </div>
@@ -74,10 +71,9 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-group row">
-                                    <div class="col-1">
+                                    <div class="col-2">
                                         <label for="email" class="form-label">Email</label>
-                                    </div>
-                                    <div class="col-1"></div>
+                                    </div>  
                                     <div class="col-3">
                                         <input type="email" class="form-control" name="email" value="{{$user->email}}" aria-describedby="emailHelp">
                                     </div>
@@ -88,29 +84,20 @@
 
                     <div class="chart tab-pane" id="permissions-chart" style="position: relative;">
                         <div class="chartjs-size-monitor">
-                            <select multiple="multiple" name="duallistbox_permissions" class="duallistbox" title="duallistbox">
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3" selected="selected">Option 3</option>
-                                <option value="option4">Option 4</option>
-                                <option value="option5">Option 5</option>
-                                <option value="option6" selected="selected">Option 6</option>
-                                <option value="option7">Option 7</option>
-                                <option value="option8">Option 8</option>
-                                <option value="option9">Option 9</option>
-                                <option value="option10">Option 10</option>
-                                <option value="option11">Option 11</option>
-                                <option value="option12">Option 12</option>
-                                <option value="option13">Option 13</option>
-                                <option value="option14">Option 14</option>
+                            <select multiple="multiple" name="permissions[]" class="duallistbox" title="duallistbox">
+                                @foreach($permissions as $permission)
+                                    <?php if($user->hasPermissionTo($permission->name)){?>
+                                        <option value="{{$permission->name}}" selected="selected">{{$permission->name}}</option>
+                                    <?php } else {?>
+                                        <option value="{{$permission->name}}">{{$permission->name}}</option>
+                                    <?php } ?>
+                                @endforeach
                             </select>
                         
                             <script>
                                 var duallistbox = $('.duallistbox').bootstrapDualListbox({
                                     nonSelectedListLabel: 'Available Permissions',
                                     selectedListLabel: 'Assigned Permissions',
-                                    preserveSelectionOnMove: 'moved',
-                                    moveOnSelect: false,
                                     infoText: false,
                                     infoTextFiltered: false,
                                     selectorMinimalHeight: 300

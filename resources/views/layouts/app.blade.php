@@ -35,8 +35,6 @@
                     </ul>
                     <!-- Right navbar links -->
                     <ul class="navbar-nav ml-auto">
-
-
                         <li class="nav-item">
                             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                                 <i class="fas fa-th-large"></i>
@@ -84,23 +82,29 @@
                 <!-- Main Sidebar Container -->
                 <aside class="main-sidebar sidebar-dark-primary">
                     <!-- Brand Logo -->
-                    <a href="{{ url('/') }}" class="brand-link">
-                        <img src="{{ asset('dist/img/ArchiveServerLogo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                            style="opacity: .8">
-                        <span class="brand-text font-weight-light">Archive Server</span>
-                    </a>
-
+                    <!--<a href="{{ url('/') }}" class="brand-link">-->
+                        <!-- <img src="{{ asset('dist/img/ArchiveServerLogo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"style="opacity: .8"> -->
+                        <div class="brand-link text-center">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <div class="col">
+                                    <span class="brand-text font-weight-light">Archive Server</span>
+                                </div>
+                                <div class="col"></div>
+                            </div>  
+                        </div>
+                    <!--</a>-->
                     <!-- Sidebar -->
                     <div class="sidebar">
-
                         <!-- Sidebar Menu -->
                         <nav class="mt-2">
                             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                                <!-- Add icons to the links using the .nav-icon class
-                                with font-awesome or any other icon font library -->
                                 <!-- Main Pages -->
+                                <!-- Brand Logo -->
                                 <li class="nav-item">
-                                    <a href="/" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}">
+                                    <a href="/" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" style="{{ Request::path() === '/' ? 'background-color: #f8f9fa; color: #343a40' : '' }}">
                                         <i class="nav-icon fas fa-home"></i>
                                         <p>Home</p>
                                     </a>
@@ -114,22 +118,19 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="notas/todas"
-                                                class="{{ Request::path() === 'notas/todas' ? 'nav-link active' : 'nav-link' }}">
+                                            <a href="notas/todas" class="{{ Request::path() === 'notas/todas' ? 'nav-link active' : 'nav-link' }} ml-3">
                                                 <i class="nav-icon fas fa-caret-right"></i>
                                                 <p>{{__('AR Invoices')}}</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="notas/favoritas"
-                                                class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }}">
+                                            <a href="notas/favoritas" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }} ml-3">
                                                 <i class="nav-icon fas fa-caret-right"></i>
                                                 <p>AP Invoices</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="notas/archivadas"
-                                                class="{{ Request::path() === 'notas/archivadas' ? 'nav-link active' : 'nav-link' }}">
+                                            <a href="notas/archivadas" class="{{ Request::path() === 'notas/archivadas' ? 'nav-link active' : 'nav-link'  }} ml-3">
                                                 <i class="nav-icon fas fa-caret-right"></i>
                                                 <p>PayRolls</p>
                                             </a>
@@ -138,46 +139,34 @@
                                 </li>
                                 <!-- /.cabinets -->
                                 <!-- Admin tools -->
-                                <li class="nav-item has-treeview">
+                                <li class="{{in_array(explode('/', str_ireplace(array('http://', 'https://'), '', Request::path()))[0], array('users','permissions','roles')) ? 'nav-item has-treeview menu-is-opening menu-open' : 'nav-item has-treeview' }}">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fas fa-users-cog"></i>
                                         <p>Admin tools<i class="fas fa-angle-left right"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="/users"
-                                                class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
-                                                <i class="nav-icon fas fa-caret-right"></i>
-                                                <i class="nav-icon fas fa-users"></i>
-                                                <p>
-                                                    Users
-                                                    <?php use App\Models\User; $users_count = User::all()->count(); ?>
-                                                    <span class="right badge badge-info">{{ $users_count ?? '0' }}</span>
-                                                </p>
+                                            <a href="/users" class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
+                                                <i class="nav-icon fas fa-users ml-3"></i>
+                                                <p>Users</p>
+                                                <?php use App\Models\User; $users_count = User::all()->count(); ?>
+                                                <span class="right badge badge-info">{{ $users_count ?? '0' }}</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/permissions"
-                                                class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
-                                                <i class="nav-icon fas fa-caret-right"></i>
-                                                <i class="nav-icon fas fas fa-tasks"></i>
-                                                <p>
-                                                    Permissionss
-                                                    <?php use App\Models\Permission; $permissions_count = Permission::all()->count(); ?>
-                                                    <span class="right badge badge-info">{{ $permissions_count ?? '0' }}</span>
-                                                </p>
+                                            <a href="/permissions" class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
+                                                <i class="nav-icon fas fas fa-tasks ml-3"></i>
+                                                <p>Permissions</p>
+                                                <?php use App\Models\Permission; $permissions_count = Permission::all()->count(); ?>
+                                                <span class="right badge badge-info">{{ $permissions_count ?? '0' }}</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="/roles"
-                                                class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }}">
-                                                <i class="nav-icon fas fa-caret-right"></i>
-                                                <i class="nav-icon fas fa-address-card"></i>
-                                                <p>
-                                                    Roles
-                                                    <?php use App\Models\Role; $roles_count = Role::all()->count(); ?>
-                                                    <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
-                                                </p>
+                                            <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
+                                                <i class="nav-icon fas fa-address-card ml-3"></i>
+                                                <p>Roles</p>
+                                                <?php use App\Models\Role; $roles_count = Role::all()->count(); ?>
+                                                <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
                                             </a>
                                         </li>
                                     </ul>
