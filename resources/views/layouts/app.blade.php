@@ -164,7 +164,7 @@
                                         <li class="nav-item">
                                             <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-address-card ml-3"></i>
-                                                <p>Roles</p>
+                                                <p>Profiles</p>
                                                 <?php use App\Models\Role; $roles_count = Role::all()->count(); ?>
                                                 <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
                                             </a>

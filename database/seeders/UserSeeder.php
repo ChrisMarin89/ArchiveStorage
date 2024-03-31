@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
         $user->lastname = 'Marin';
         $user->email = 'cmarin.mail@gmail.com';
         $user->password = bcrypt('Chris.123');
+        $user->created_by = 'System';
+        $user->updated_by = 'System';
         $user->assignRole('SuperAdmin');
         $user->save();
     }

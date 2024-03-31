@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserFormRequest;
 use App\Models\User;
 use App\Models\Permission;
+use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    
     public function __construct(){
         $this->middleware('auth');
     }
@@ -27,6 +30,7 @@ class UserController extends Controller
             $search['name'] = trim($request->get('name'));
             $search['lastname'] = trim($request->get('lastname'));
             $search['email'] = trim($request->get('email'));
+            $search['profile'] = trim($request->get('profile'));
 
             if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
             else $search['name'] = str_replace('*', '%', $search['name']);
@@ -59,7 +63,18 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $permissions = Permission::all();
+        $roles = Role::all();
+
+        $permissions_except_app = array();
+        /*
+        foreach($permissions as $permission){
+            if(!str_starts_with($permission->name, 'app-')) $permissions_except_app[] = $permission;
+        }
+        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app, 'roles' => $roles]);
+        */
+        
+        return view('users.create', ['permissions' => $permissions, 'roles' => $roles]);
     }
 
     /**
@@ -76,6 +91,12 @@ class UserController extends Controller
         $user->email = request('email');
         $user->password = bcrypt(request('password'));
 
+        if(is_null($request->get('profile')) || $request->get('profile') == '') $user->syncRoles('User');
+        else $user->syncRoles([$request->get('profile')]);
+
+        $user->created_by = is_object(Auth::user()) ? Auth::user()->email : 'System';
+        $user->updated_by = is_object(Auth::user()) ? Auth::user()->email : 'System';
+
         $user->save();
         return redirect('/users');
     }
@@ -88,7 +109,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('users.show', ['user' => User::findOrFail($id)]); 
+        $user = User::findOrFail($id);
+        $permissions = Permission::all();
+        $roles = Role::all();
+
+        $permissions_except_app = array();
+        /*
+        foreach($permissions as $permission){
+            if(!str_starts_with($permission->name, 'app-')) $permissions_except_app[] = $permission;
+        }
+        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app, 'roles' => $roles]);
+        */
+        
+        return view('users.show', ['user' => $user, 'permissions' => $permissions, 'roles' => $roles]);
     }
 
     /**
@@ -99,15 +132,19 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $user = User::findOrFail($id);
         $permissions = Permission::all();
+        $roles = Role::all();
+
         $permissions_except_app = array();
         /*
         foreach($permissions as $permission){
             if(!str_starts_with($permission->name, 'app-')) $permissions_except_app[] = $permission;
         }
-        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app]);
+        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app, 'roles' => $roles]);
         */
-        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions]);
+        
+        return view('users.edit', ['user' => $user, 'permissions' => $permissions, 'roles' => $roles]);
     }
 
     /**
@@ -123,9 +160,14 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
+        if(!is_null(request('password')) && request('password') !='') $user->password = bcrypt(request('password'));
+
+        $user->syncRoles([$request->get('profile')]);
 
         if(!is_null($request->get('permissions'))) $user->syncPermissions($request->get('permissions'));
         else foreach($user->getPermissionNames() as $revoved_permission) $user->revokePermissionTo($revoved_permission);
+
+        $user->updated_by = is_object(Auth::user()) ? Auth::user()->email : 'System';
 
         $user->update();
         return redirect('/users');

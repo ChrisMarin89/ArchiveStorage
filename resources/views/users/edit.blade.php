@@ -79,6 +79,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="email" class="form-label">Profile</label>
+                                    </div>  
+                                    <div class="col-1">
+                                        <select name="profile">
+                                            @if(count($user->getRoleNames())==0))
+                                                <option value="" selected>-</option>
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role->name}}">{{$role->name}}</option>
+                                                @endforeach
+                                            @else
+                                                @foreach($roles as $role)
+                                                    @if($user->hasRole($role->name))
+                                                        <option value="{{$role->name}}" selected>{{$role->name}}</option>
+                                                    @else
+                                                        <option value="{{$role->name}}">{{$role->name}}</option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>            
                     </div>
 
@@ -86,11 +111,11 @@
                         <div class="chartjs-size-monitor">
                             <select multiple="multiple" name="permissions[]" class="duallistbox" title="duallistbox">
                                 @foreach($permissions as $permission)
-                                    <?php if($user->hasPermissionTo($permission->name)){?>
+                                    @if($user->hasPermissionTo($permission->name))
                                         <option value="{{$permission->name}}" selected="selected">{{$permission->name}}</option>
-                                    <?php } else {?>
+                                    @else
                                         <option value="{{$permission->name}}">{{$permission->name}}</option>
-                                    <?php } ?>
+                                    @endif
                                 @endforeach
                             </select>
                         
@@ -110,7 +135,26 @@
                     <div class="chart tab-pane" id="security-chart" style="position: relative;">
                         <div class="chartjs-size-monitor">
                             <div class="chartjs-size-monitor-expand">
-                                <div class="">security</div>
+                                <div class="mb-3">
+                                    <div class="form-group row">
+                                        <div class="col-2">
+                                            <label for="password" class="form-label">Password</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="password" class="form-control" name="password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-group row">
+                                        <div class="col-2">
+                                            <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="password" class="form-control" name="password_confirmation">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="chartjs-size-monitor-shrink">
                                 <div class=""></div>
@@ -120,13 +164,57 @@
 
                     <div class="chart tab-pane" id="status-chart" style="position: relative;">
                         <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class="">status</div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="name" class="form-label">Created By</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="created_by" value="{{$user->created_by}}" readonly>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="name" class="form-label">Creation Date</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="created_at" value="{{$user->created_at}}" readonly>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="lastname" class="form-label">Modified by</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="updated_by" value="{{$user->updated_by}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="lastname" class="form-label">Modification Date</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="updated_at" value="{{$user->updated_at}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="email" class="form-label">Logins</label>
+                                    </div>  
+                                    <div class="col-2">
+                                        <input type="email" class="form-control" name="logins" value="" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
                     </div>
                 </div>
             </div>

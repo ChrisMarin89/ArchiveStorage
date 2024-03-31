@@ -21,7 +21,7 @@ class PermissionController extends Controller
     {
         if(is_null($request)){
             $permissions = Permission::where('name', '!=', 'app-super-admin')
-                                    ->orderBy('id', 'asc')
+                                    ->orderBy('name', 'asc')
                                     ->paginate(15);
             return view('permissions.index', ['permissions' => $permissions]);
         }else{

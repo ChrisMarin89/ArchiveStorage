@@ -8,7 +8,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h6 class="mt-2">Show Role: {{$role->name}}</h6>
+                            <h6 class="mt-2">Show Profile: {{$role->name}}</h6>
                         </div><!-- /.col -->
                         <div class="col-sm-6 float-sm-right">
                             <ol class="breadcrumb float-sm-right">

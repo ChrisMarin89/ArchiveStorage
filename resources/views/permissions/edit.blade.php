@@ -15,7 +15,7 @@
                             </div><!-- /.col -->
                             <div class="col-sm-6 float-sm-right">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><button type="reset" class="btn btn-light btn-sm"><a href="/users" style="color: rgba(0, 0, 0, 0.9);"><i class="fas fa-arrow-left"></i> Back</a></button></li>
+                                    <li class="breadcrumb-item"><button type="reset" class="btn btn-light btn-sm"><a href="/permissions" style="color: rgba(0, 0, 0, 0.9);"><i class="fas fa-arrow-left"></i> Back</a></button></li>
                                     <li class="breadcrumb-item"><button type="submit" class="btn btn-light btn-sm"><i class="far fa-save"></i> Save</button></li>
                                 </ol>
                             </div><!-- /.col -->
