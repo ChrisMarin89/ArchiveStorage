@@ -24,51 +24,40 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if(is_null($request)){
-            //This section is not being used never
-            $users = DB::table('users')
-                        ->select('users.*', 'roles.name as profile')
-                        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-                        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                        ->where('roles.name', '!=', 'SuperAdmin')
-                        ->orderBy('users.email', 'asc')->paginate(15);
-            return view('users.index', ['users' => $users]);
-        }else{
-            $search['name'] = trim($request->get('name'));
-            $search['lastname'] = trim($request->get('lastname'));
-            $search['email'] = trim($request->get('email'));
-            $search['profile'] = trim($request->get('profile'));
+        $search['name'] = trim($request->get('name'));
+        $search['lastname'] = trim($request->get('lastname'));
+        $search['email'] = trim($request->get('email'));
+        $search['profile'] = trim($request->get('profile'));
 
-            if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
-            else $search['name'] = str_replace('*', '%', $search['name']);
-            if(is_null($search['lastname']) || $search['lastname'] == '') $search['lastname'] = '%';
-            else $search['lastname'] = str_replace('*', '%', $search['lastname']);
-            if(is_null($search['email']) || $search['email'] == '') $search['email'] = '%';
-            else $search['email'] = str_replace('*', '%', $search['email']);
-            if(is_null($search['profile']) || $search['profile'] == '') $search['profile'] = '%';
-            else $search['profile'] = str_replace('*', '%', $search['profile']);
+        if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
+        else $search['name'] = str_replace('*', '%', $search['name']);
+        if(is_null($search['lastname']) || $search['lastname'] == '') $search['lastname'] = '%';
+        else $search['lastname'] = str_replace('*', '%', $search['lastname']);
+        if(is_null($search['email']) || $search['email'] == '') $search['email'] = '%';
+        else $search['email'] = str_replace('*', '%', $search['email']);
+        if(is_null($search['profile']) || $search['profile'] == '') $search['profile'] = '%';
+        else $search['profile'] = str_replace('*', '%', $search['profile']);
 
-            $users = DB::table('users')
-                        ->select('users.*', 'roles.name as profile')
-                        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-                        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                        ->where('users.lastname', 'LIKE', $search['lastname'])
-                        ->where('users.email', 'LIKE', $search['email'])
-                        ->where('roles.name', 'LIKE', $search['profile'])
-                        ->where('roles.name', '!=', 'SuperAdmin')
-                        ->orderBy('users.email', 'asc')->paginate(15);
+        $users = DB::table('users')
+                    ->select('users.*', 'roles.name as profile')
+                    ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->where('users.lastname', 'LIKE', $search['lastname'])
+                    ->where('users.email', 'LIKE', $search['email'])
+                    ->where('roles.name', 'LIKE', $search['profile'])
+                    ->where('roles.name', '!=', 'SuperAdmin')
+                    ->orderBy('users.email', 'asc')->paginate(15);
+                    
+        if($search['name'] == '%') $search['name'] = '';
+        else $search['name'] = str_replace('%', '*', $search['name']);
+        if($search['lastname'] == '%') $search['lastname'] = '';
+        else $search['lastname'] = str_replace('%', '*', $search['lastname']);
+        if($search['email'] == '%') $search['email'] = '';
+        else $search['email'] = str_replace('%', '*', $search['email']);
+        if($search['profile'] == '%') $search['profile'] = '';
+        else $search['profile'] = str_replace('%', '*', $search['profile']);
 
-            if($search['name'] == '%') $search['name'] = '';
-            else $search['name'] = str_replace('%', '*', $search['name']);
-            if($search['lastname'] == '%') $search['lastname'] = '';
-            else $search['lastname'] = str_replace('%', '*', $search['lastname']);
-            if($search['email'] == '%') $search['email'] = '';
-            else $search['email'] = str_replace('%', '*', $search['email']);
-            if($search['profile'] == '%') $search['profile'] = '';
-            else $search['profile'] = str_replace('%', '*', $search['profile']);
-
-            return view('users.index', ['users' => $users, 'search' => $search]);
-        }
+        return view('users.index', ['users' => $users, 'search' => $search]);
     }
 
     /**

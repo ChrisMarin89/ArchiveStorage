@@ -20,7 +20,11 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="{{asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js')}}"></script>
         <link rel="stylesheet" href="{{asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.css')}}">
-        
+        <?php 
+            use App\Models\User;
+            use App\Models\Permission;
+            use App\Models\Role;
+        ?>
     </head>
     <body class="hold-transition sidebar-mini">
         <div id="app">
@@ -149,7 +153,7 @@
                                             <a href="/users" class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fa-users ml-3"></i>
                                                 <p>Users</p>
-                                                <?php use App\Models\User; $users_count = User::allExceptSuperAdmin()->count(); ?>
+                                                <?php $users_count = User::whereNotIn('id', User::SuperAdminIDs())->get()->count(); ?>
                                                 <span class="right badge badge-info">{{ $users_count ?? '0' }}</span>
                                             </a>
                                         </li>
@@ -157,7 +161,7 @@
                                             <a href="/permissions" class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fas fa-tasks ml-3"></i>
                                                 <p>Permissions</p>
-                                                <?php use App\Models\Permission; $permissions_count = Permission::all()->count(); ?>
+                                                <?php $permissions_count = Permission::whereNotIn('id', Permission::AppPermissionsIDs())->get()->count(); ?>
                                                 <span class="right badge badge-info">{{ $permissions_count ?? '0' }}</span>
                                             </a>
                                         </li>
@@ -165,7 +169,15 @@
                                             <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-address-card ml-3"></i>
                                                 <p>Profiles</p>
-                                                <?php use App\Models\Role; $roles_count = Role::all()->count(); ?>
+                                                <?php $roles_count = Role::whereNotIn('id', Role::SuperAdminIDs())->get()->count(); ?>
+                                                <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/config" class="{{ Request::path() === 'config' ? 'nav-link active' : 'nav-link' }} ">
+                                                <i class="nav-icon fas fa-cogs ml-3"></i>
+                                                <p>Configurations</p>
+                                                <?php $roles_count = Role::whereNotIn('id', Role::SuperAdminIDs())->get()->count(); ?>
                                                 <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
                                             </a>
                                         </li>

@@ -45,14 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function allExceptSuperAdmin()
+    public static function SuperAdminIDs()
     {
-        $super_admins_ids = DB::table('users')
-                                    ->select('users.id')
-                                    ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-                                    ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                                    ->where('roles.name', '=', 'SuperAdmin')->pluck('users.id')->toArray();
-        
-        return User::whereNotIn('id', $super_admins_ids)->orderBy('users.email', 'asc') ->get();
+        return DB::table('users')
+                    ->select('users.id')
+                    ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                    ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                    ->where('roles.name', '=', 'SuperAdmin')->pluck('users.id')->toArray();
     }
 }

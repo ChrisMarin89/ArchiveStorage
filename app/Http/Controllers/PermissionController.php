@@ -20,28 +20,20 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        if(is_null($request)){
-            $permissions = DB::table('permissions')
-                                ->where('name', 'LIKE', 'web-%')
-                                ->orderBy('name', 'asc')->paginate(15);
-            return view('permissions.index', ['permissions' => $permissions]);
-        }else{
-            $search['name'] = trim($request->get('name'));
+        $search['name'] = trim($request->get('name'));
 
-            if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
-            else $search['name'] = str_replace('*', '%', $search['name']);
+        if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
+        else $search['name'] = str_replace('*', '%', $search['name']);
 
-            $permissions = DB::table('permissions')
-                                ->where('name', 'LIKE', 'web-%')
-                                ->where('name', 'LIKE', $search['name'])
-                                ->orderBy('name', 'asc')
-                                ->paginate(15);
+        $permissions = Permission::whereNotIn('id', Permission::AppPermissionsIDs())
+                            ->where('name', 'LIKE', $search['name'])
+                            ->orderBy('name', 'asc')
+                            ->paginate(15);
 
-            if($search['name'] == '%') $search['name'] = '';
-            else $search['name'] = str_replace('%', '*', $search['name']);  
+        if($search['name'] == '%') $search['name'] = '';
+        else $search['name'] = str_replace('%', '*', $search['name']);  
 
-            return view('permissions.index', ['permissions' => $permissions, 'search' => $search]);
-        }
+        return view('permissions.index', ['permissions' => $permissions, 'search' => $search]);
     }
 
     /**
