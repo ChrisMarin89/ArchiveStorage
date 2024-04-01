@@ -11,27 +11,37 @@ class RoleAndPermissionSeeder extends Seeder
     public function run()
     {
         /***--PERMISSIONS--***/
-        Permission::create(['name' => 'app-super-admin']);
+        Permission::create(['name' => 'app-super-admin', 'created_by' => 'System', 'updated_by' => 'System']);
         //Users
-        Permission::create(['name' => 'app-users-create']);
-        Permission::create(['name' => 'app-users-read']);
-        Permission::create(['name' => 'app-users-update']);
-        Permission::create(['name' => 'app-users-delete']);
+        Permission::create(['name' => 'app-users-create', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-users-read', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-users-update', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-users-delete', 'created_by' => 'System', 'updated_by' => 'System']);
         //Permission
-        Permission::create(['name' => 'app-permissions-create']);
-        Permission::create(['name' => 'app-permissions-read']);
-        Permission::create(['name' => 'app-permissions-update']);
-        Permission::create(['name' => 'app-permissions-delete']);
+        Permission::create(['name' => 'app-permissions-create', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-permissions-read', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-permissions-update', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-permissions-delete', 'created_by' => 'System', 'updated_by' => 'System']);
         //Roles
-        Permission::create(['name' => 'app-roles-read']);
-        Permission::create(['name' => 'app-roles-update']);
+        Permission::create(['name' => 'app-roles-read', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'app-roles-update', 'created_by' => 'System', 'updated_by' => 'System']);
+        //Web Normal permission demo
+        Permission::create(['name' => 'web-in-invoices', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'web-out-invoices', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'web-in-deliverynotes', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'web-out-deliverynotes', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'web-in-letters', 'created_by' => 'System', 'updated_by' => 'System']);
+        Permission::create(['name' => 'web-out-letters', 'created_by' => 'System', 'updated_by' => 'System']);
+
 
         /***--ROLES--***/
-        $superAdminRole = Role::create(['name' => 'SuperAdmin']); // GATE Auth returns "true" for all permissions //
-        $adminRole = Role::create(['name' => 'Admin']);
-        $managerRole = Role::create(['name' => 'Manager']);
-        $collabRole = Role::create(['name' => 'Collab']);
-        $userRole = Role::create(['name' => 'User']);
+        // GATE Auth returns "true" for all permissions //
+        $superAdminRole = Role::create(['name' => 'SuperAdmin', 'created_by' => 'System', 'updated_by' => 'System']);
+        // Rest of permissions //
+        $adminRole = Role::create(['name' => 'Admin', 'created_by' => 'System', 'updated_by' => 'System']);
+        $managerRole = Role::create(['name' => 'Manager', 'created_by' => 'System', 'updated_by' => 'System']);
+        $collabRole = Role::create(['name' => 'Collab', 'created_by' => 'System', 'updated_by' => 'System']);
+        $userRole = Role::create(['name' => 'User', 'created_by' => 'System', 'updated_by' => 'System']);
 
         /***--Asign Permissions to Roles--***/
         $superAdminRole->givePermissionTo([

@@ -207,10 +207,20 @@
                             <div class="mb-3">
                                 <div class="form-group row">
                                     <div class="col-2">
-                                        <label for="email" class="form-label">Logins</label>
+                                        <label for="email" class="form-label">Total Logins</label>
                                     </div>  
                                     <div class="col-2">
-                                        <input type="email" class="form-control" name="logins" value="" readonly>
+                                        <input type="email" class="form-control" name="logins" value="{{$user->login_count}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="email" class="form-label">Last Login</label>
+                                    </div>  
+                                    <div class="col-2">
+                                        <input type="email" class="form-control" name="logins" value="{{$user->last_login_at}}" readonly>
                                     </div>
                                 </div>
                             </div>

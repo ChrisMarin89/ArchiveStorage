@@ -48,7 +48,7 @@
                                     <td><input class="form-control form-control-sm" name="email" type="search" placeholder="Filter" aria-label="Search" value="{{$search['email']}}"></td>
                                     <td><input class="form-control form-control-sm" name="lastname" type="search" placeholder="Filter" aria-label="Search" value="{{$search['lastname']}}"></td>
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search" value="{{$search['name']}}"></td>
-                                    <td><!--<input class="form-control form-control-sm" name="profile" type="search" placeholder="Filter" aria-label="Search" value="{{$search['profile']}}">--></td>
+                                    <td><input class="form-control form-control-sm" name="profile" type="search" placeholder="Filter" aria-label="Search" value="{{$search['profile']}}"></td>
                                     <td></td>
                                     <td class="text-right">
                                         <button class="btn btn-light btn-sm" type="submit" ><i class="fas fa-filter"></i></button>
@@ -59,7 +59,7 @@
                                     <td><input class="form-control form-control-sm" name="email" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td><input class="form-control form-control-sm" name="lastname" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search"></td>
-                                    <td><!--<input class="form-control form-control-sm" name="profile" type="search" placeholder="Filter" aria-label="Search">--></td>
+                                    <td><input class="form-control form-control-sm" name="profile" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td></td>
                                     <td class="text-right">
                                         <button class="btn btn-light btn-sm" type="submit"><i class="fas fa-filter"></i></button>
@@ -75,12 +75,8 @@
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->lastname}}</td>
                                 <td>{{$user->name}}</td>
-                                <td>
-                                    @if(count($user->getRoleNames())>0)
-                                        {{$user->getRoleNames()[0]}}
-                                    @endif
-                                </td>
-                                <td></td>
+                                <td>{{$user->profile}}</td>
+                                <td style="text-align: center;">{{$user->login_count}}</td>
                                 <td class="text-right">
                                     <form action="{{route('users.destroy', $user->id)}}" method="POST">
                                         <a href="{{route('users.show', $user->id)}}">

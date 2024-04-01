@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -24,7 +25,12 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if(is_null($request)){
-            $users = User::all()->orderBy('email', 'asc')->paginate(15);
+            //This section is not being used never
+            $users = DB::table('users')
+                        ->select('users.*', 'roles.name as profile')
+                        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                        ->orderBy('users.email', 'asc')->paginate(15);
             return view('users.index', ['users' => $users]);
         }else{
             $search['name'] = trim($request->get('name'));
@@ -38,12 +44,17 @@ class UserController extends Controller
             else $search['lastname'] = str_replace('*', '%', $search['lastname']);
             if(is_null($search['email']) || $search['email'] == '') $search['email'] = '%';
             else $search['email'] = str_replace('*', '%', $search['email']);
+            if(is_null($search['profile']) || $search['profile'] == '') $search['profile'] = '%';
+            else $search['profile'] = str_replace('*', '%', $search['profile']);
 
-            $users = User::where('name', 'LIKE', $search['name'])
-                        ->where('lastname', 'LIKE', $search['lastname'])
-                        ->where('email', 'LIKE', $search['email'])
-                        ->orderBy('email', 'asc')
-                        ->paginate(15);
+            $users = DB::table('users')
+                        ->select('users.*', 'roles.name as profile')
+                        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                        ->where('users.lastname', 'LIKE', $search['lastname'])
+                        ->where('users.email', 'LIKE', $search['email'])
+                        ->where('roles.name', 'LIKE', $search['profile'])
+                        ->orderBy('users.email', 'asc')->paginate(15);
 
             if($search['name'] == '%') $search['name'] = '';
             else $search['name'] = str_replace('%', '*', $search['name']);
@@ -51,6 +62,8 @@ class UserController extends Controller
             else $search['lastname'] = str_replace('%', '*', $search['lastname']);
             if($search['email'] == '%') $search['email'] = '';
             else $search['email'] = str_replace('%', '*', $search['email']);
+            if($search['profile'] == '%') $search['profile'] = '';
+            else $search['profile'] = str_replace('%', '*', $search['profile']);
 
             return view('users.index', ['users' => $users, 'search' => $search]);
         }
@@ -109,19 +122,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $permissions = Permission::all();
-        $roles = Role::all();
-
-        $permissions_except_app = array();
-        /*
-        foreach($permissions as $permission){
-            if(!str_starts_with($permission->name, 'app-')) $permissions_except_app[] = $permission;
-        }
-        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app, 'roles' => $roles]);
-        */
+        $user = DB::table('users')
+                        ->select('users.*', 'roles.name as profile')
+                        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                        ->where('users.id', '=', $id)->first();
+        $permissions = DB::table('permissions')
+                            ->where('name', 'NOT LIKE', 'app-%')
+                            ->orderBy('name', 'asc')->paginate(15);
         
-        return view('users.show', ['user' => $user, 'permissions' => $permissions, 'roles' => $roles]);
+        return view('users.show', ['user' => $user, 'permissions' => $permissions]);
     }
 
     /**
@@ -133,16 +143,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $permissions = Permission::all();
+        $permissions = DB::table('permissions')
+                        ->where('name', 'NOT LIKE', 'app-%')
+                        ->orderBy('name', 'asc')->paginate(15);
         $roles = Role::all();
-
-        $permissions_except_app = array();
-        /*
-        foreach($permissions as $permission){
-            if(!str_starts_with($permission->name, 'app-')) $permissions_except_app[] = $permission;
-        }
-        return view('users.edit', ['user' => User::findOrFail($id), 'permissions' => $permissions_except_app, 'roles' => $roles]);
-        */
         
         return view('users.edit', ['user' => $user, 'permissions' => $permissions, 'roles' => $roles]);
     }

@@ -77,15 +77,7 @@
                                         <label for="email" class="form-label">Profile</label>
                                     </div>  
                                     <div class="col-1">
-                                        @if(count($user->getRoleNames())==0))
-                                            <input type="email" class="form-control" name="profile" value="" aria-describedby="emailHelp" readonly>
-                                        @else
-                                            @foreach($roles as $role)
-                                                @if($user->hasRole($role->name))
-                                                    <input type="email" class="form-control" name="profile" value="{{$role->name}}" aria-describedby="emailHelp" readonly>
-                                                @endif
-                                            @endforeach
-                                        @endif
+                                        <input type="email" class="form-control" name="profile" value="{{$user->profile}}" aria-describedby="emailHelp" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -94,8 +86,8 @@
 
                 <div class="chart tab-pane" id="permissions-chart" style="position: relative;">
                     <div class="chartjs-size-monitor">
-                        <div class="col-2">
-                            <table class="table table-hover table-sm table-striped">
+                        <div class="col-3">
+                            <table class="table table-hover table-sm table-striped" style="text-align: center;">
                                 <tbody>
                                     @foreach($permissions as $permission)
                                         @if($user->hasPermissionTo($permission->name))
@@ -155,10 +147,20 @@
                             <div class="mb-3">
                                 <div class="form-group row">
                                     <div class="col-2">
-                                        <label for="email" class="form-label">Logins</label>
+                                        <label for="email" class="form-label">Total Logins</label>
                                     </div>  
                                     <div class="col-2">
-                                        <input type="email" class="form-control" name="logins" value="" readonly>
+                                        <input type="email" class="form-control" name="logins" value="{{$user->login_count}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="email" class="form-label">Last Login</label>
+                                    </div>  
+                                    <div class="col-2">
+                                        <input type="email" class="form-control" name="logins" value="{{$user->last_login_at}}" readonly>
                                     </div>
                                 </div>
                             </div>

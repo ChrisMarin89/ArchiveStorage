@@ -6,6 +6,7 @@ use App\Http\Requests\PermissionFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Permission;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class PermissionController extends Controller
 {
@@ -20,9 +21,9 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         if(is_null($request)){
-            $permissions = Permission::where('name', '!=', 'app-super-admin')
-                                    ->orderBy('name', 'asc')
-                                    ->paginate(15);
+            $permissions = DB::table('permissions')
+                                ->where('name', 'LIKE', 'web-%')
+                                ->orderBy('name', 'asc')->paginate(15);
             return view('permissions.index', ['permissions' => $permissions]);
         }else{
             $search['name'] = trim($request->get('name'));
@@ -30,10 +31,11 @@ class PermissionController extends Controller
             if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
             else $search['name'] = str_replace('*', '%', $search['name']);
 
-            $permissions = Permission::where('name', '!=', 'app-super-admin')
-                                    ->where('name', 'LIKE', $search['name'])
-                                    ->orderBy('id', 'asc')
-                                    ->paginate(15);
+            $permissions = DB::table('permissions')
+                                ->where('name', 'LIKE', 'web-%')
+                                ->where('name', 'LIKE', $search['name'])
+                                ->orderBy('name', 'asc')
+                                ->paginate(15);
 
             if($search['name'] == '%') $search['name'] = '';
             else $search['name'] = str_replace('%', '*', $search['name']);  
