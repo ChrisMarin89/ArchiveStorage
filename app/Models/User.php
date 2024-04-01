@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,4 +44,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function allExceptSuperAdmin()
+    {
+        $super_admins_ids = DB::table('users')
+                                    ->select('users.id')
+                                    ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                                    ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                                    ->where('roles.name', '=', 'SuperAdmin')->pluck('users.id')->toArray();
+        
+        return User::whereNotIn('id', $super_admins_ids)->orderBy('users.email', 'asc') ->get();
+    }
 }

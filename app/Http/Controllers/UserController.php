@@ -30,6 +30,7 @@ class UserController extends Controller
                         ->select('users.*', 'roles.name as profile')
                         ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                         ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                        ->where('roles.name', '!=', 'SuperAdmin')
                         ->orderBy('users.email', 'asc')->paginate(15);
             return view('users.index', ['users' => $users]);
         }else{
@@ -54,6 +55,7 @@ class UserController extends Controller
                         ->where('users.lastname', 'LIKE', $search['lastname'])
                         ->where('users.email', 'LIKE', $search['email'])
                         ->where('roles.name', 'LIKE', $search['profile'])
+                        ->where('roles.name', '!=', 'SuperAdmin')
                         ->orderBy('users.email', 'asc')->paginate(15);
 
             if($search['name'] == '%') $search['name'] = '';

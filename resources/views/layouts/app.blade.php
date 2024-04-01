@@ -149,7 +149,7 @@
                                             <a href="/users" class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fa-users ml-3"></i>
                                                 <p>Users</p>
-                                                <?php use App\Models\User; $users_count = User::all()->count(); ?>
+                                                <?php use App\Models\User; $users_count = User::allExceptSuperAdmin()->count(); ?>
                                                 <span class="right badge badge-info">{{ $users_count ?? '0' }}</span>
                                             </a>
                                         </li>

@@ -52,7 +52,7 @@
                                         <label for="name" class="form-label">Name</label>
                                     </div>
                                     <div class="col-2">
-                                        <input type="text" class="form-control" name="name" value="{{$permission->name}}" placeholder="Type your name.">
+                                        <input type="text" class="form-control" name="name" value="{{$permission->name}}" placeholder="Type your name." readonly>
                                     </div>
                                 </div>
                             </div>
