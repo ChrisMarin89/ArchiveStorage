@@ -28,6 +28,7 @@ class UserController extends Controller
         $search['lastname'] = trim($request->get('lastname'));
         $search['email'] = trim($request->get('email'));
         $search['profile'] = trim($request->get('profile'));
+        $search['lang'] = trim($request->get('lang'));
 
         if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
         else $search['name'] = str_replace('*', '%', $search['name']);
@@ -37,6 +38,8 @@ class UserController extends Controller
         else $search['email'] = str_replace('*', '%', $search['email']);
         if(is_null($search['profile']) || $search['profile'] == '') $search['profile'] = '%';
         else $search['profile'] = str_replace('*', '%', $search['profile']);
+        if(is_null($search['lang']) || $search['lang'] == '') $search['lang'] = '%';
+        else $search['lang'] = str_replace('*', '%', $search['lang']);
 
         $users = DB::table('users')
                     ->select('users.*', 'roles.name as profile')
@@ -45,6 +48,7 @@ class UserController extends Controller
                     ->where('users.lastname', 'LIKE', $search['lastname'])
                     ->where('users.email', 'LIKE', $search['email'])
                     ->where('roles.name', 'LIKE', $search['profile'])
+                    ->where('users.lang', 'LIKE', $search['lang'])
                     ->where('roles.name', '!=', 'SuperAdmin')
                     ->orderBy('users.email', 'asc')->paginate(15);
                     
@@ -56,6 +60,8 @@ class UserController extends Controller
         else $search['email'] = str_replace('%', '*', $search['email']);
         if($search['profile'] == '%') $search['profile'] = '';
         else $search['profile'] = str_replace('%', '*', $search['profile']);
+        if($search['lang'] == '%') $search['lang'] = '';
+        else $search['lang'] = str_replace('%', '*', $search['lang']);
 
         return view('users.index', ['users' => $users, 'search' => $search]);
     }
@@ -113,11 +119,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = DB::table('users')
-                        ->select('users.*', 'roles.name as profile')
-                        ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-                        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                        ->where('users.id', '=', $id)->first();
+        $user = User::findOrFail($id);
         $permissions = DB::table('permissions')
                             ->where('name', 'NOT LIKE', 'app-%')
                             ->orderBy('name', 'asc')->paginate(15);
@@ -155,6 +157,7 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
+        $user->lang = $request->get('lang');
         if(!is_null(request('password')) && request('password') !='') $user->password = bcrypt(request('password'));
 
         $user->syncRoles([$request->get('profile')]);

@@ -34,6 +34,7 @@
                             <th scope="col">Lastname</th>
                             <th scope="col">Name</th>
                             <th scope="col">Profile</th>
+                            <th scope="col">Language</th>
                             <th scope="col">Logins</th>
                             <th scope="col" class="text-right">
                                 Options
@@ -49,23 +50,20 @@
                                     <td><input class="form-control form-control-sm" name="lastname" type="search" placeholder="Filter" aria-label="Search" value="{{$search['lastname']}}"></td>
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search" value="{{$search['name']}}"></td>
                                     <td><input class="form-control form-control-sm" name="profile" type="search" placeholder="Filter" aria-label="Search" value="{{$search['profile']}}"></td>
+                                    <td><input class="form-control form-control-sm" name="lang" type="search" placeholder="Filter" aria-label="Search" value="{{$search['lang']}}"></td>
                                     <td></td>
-                                    <td class="text-right">
-                                        <button class="btn btn-light btn-sm" type="submit" ><i class="fas fa-filter"></i></button>
-                                        <button type="reset" class="btn btn-light btn-sm"><a href="/users" style="color: rgba(0, 0, 0, 0.9);">Clear</a></button>
-                                        
-                                    </td>
                                 @else
                                     <td><input class="form-control form-control-sm" name="email" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td><input class="form-control form-control-sm" name="lastname" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td><input class="form-control form-control-sm" name="profile" type="search" placeholder="Filter" aria-label="Search"></td>
+                                    <td><input class="form-control form-control-sm" name="lang" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td></td>
+                                @endif
                                     <td class="text-right">
                                         <button class="btn btn-light btn-sm" type="submit"><i class="fas fa-filter"></i></button>
                                         <button type="reset" class="btn btn-light btn-sm"><a href="/users" style="color: rgba(0, 0, 0, 0.9);">Clear</a></button>
                                     </td>
-                                @endif
                             </form>
                         </tr>
                     </thead>
@@ -76,6 +74,7 @@
                                 <td>{{$user->lastname}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->profile}}</td>
+                                <td>{{$user->lang}}</td>
                                 <td style="text-align: center;">{{$user->login_count}}</td>
                                 <td class="text-right">
                                     <form action="{{route('users.destroy', $user->id)}}" method="POST">

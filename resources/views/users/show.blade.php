@@ -72,15 +72,25 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="email" class="form-label">Profile</label>
-                                    </div>  
-                                    <div class="col-1">
-                                        <input type="email" class="form-control" name="profile" value="{{$user->profile}}" aria-describedby="emailHelp" readonly>
-                                    </div>
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="email" class="form-label">Profile</label>
+                                </div>  
+                                <div class="col-1">
+                                    <input type="email" class="form-control" name="profile" value="{{$user->getRoleNames()[0]}}" aria-describedby="emailHelp" readonly>
                                 </div>
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="email" class="form-label">Language</label>
+                                </div>  
+                                <div class="col-1">
+                                    <input type="email" class="form-control" name="lang" value="{{$user->lang}}" aria-describedby="emailHelp" readonly>
+                                </div>
+                            </div>
+                        </div>
                     </div>            
                 </div>
 

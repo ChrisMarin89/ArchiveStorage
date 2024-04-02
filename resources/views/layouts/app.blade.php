@@ -177,8 +177,6 @@
                                             <a href="/config" class="{{ Request::path() === 'config' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-cogs ml-3"></i>
                                                 <p>Configurations</p>
-                                                <?php $roles_count = Role::whereNotIn('id', Role::SuperAdminIDs())->get()->count(); ?>
-                                                <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
                                             </a>
                                         </li>
                                     </ul>

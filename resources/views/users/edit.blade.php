@@ -104,6 +104,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="email" class="form-label">Language</label>
+                                    </div>  
+                                    <div class="col-1">
+                                        <select name="lang">
+                                        @if($user->lang == "en")
+                                            <option value="en" selected>en</option>
+                                            <option value="es">es</option>
+                                        @elseif($user->lang == "es")
+                                            <option value="en" >en</option>
+                                            <option value="es" selected>es</option>
+                                        @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>            
                     </div>
 

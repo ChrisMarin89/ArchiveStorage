@@ -30,7 +30,7 @@ class UserFormRequest extends FormRequest
                 'name' => 'required|max:255',
                 'lastname' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users,email,' . $this->user,
-                //'email' => ['required','email','max:255',Rule::unique('users')->ignore($this->user),],
+                'lang' => 'required|max:50',
                 'profile' => 'required|max:255',
                 'password' => 'confirmed',
             ];
@@ -39,6 +39,7 @@ class UserFormRequest extends FormRequest
                 'name' => 'required|max:255',
                 'lastname' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users,email',
+                'lang' => 'required|max:50',
                 'profile' => 'required|max:255',
                 'password' => 'min:6|confirmed',
             ];
