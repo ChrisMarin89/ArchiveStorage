@@ -139,7 +139,7 @@ class UserController extends Controller
         $permissions = DB::table('permissions')
                         ->where('name', 'NOT LIKE', 'app-%')
                         ->orderBy('name', 'asc')->paginate(15);
-        $roles = Role::all();
+        $roles = Role::whereNotIn('id', Role::SuperAdminIDs())->get(); 
         
         return view('users.edit', ['user' => $user, 'permissions' => $permissions, 'roles' => $roles]);
     }

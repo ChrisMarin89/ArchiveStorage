@@ -56,6 +56,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="description" class="form-label">Description</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" class="form-control" name="description" value="{{$permission->description}}" placeholder="Type a description.">
+                                    </div>
+                                </div>
+                            </div>
                         </div>            
                     </div>
 
@@ -86,14 +96,50 @@
 
                     <div class="chart tab-pane" id="status-chart" style="position: relative;">
                         <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class="">status</div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="created_by" class="form-label">Created By</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="created_by" value="{{$permission->created_by}}" readonly>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="created_at" class="form-label">Creation Date</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="created_at" value="{{$permission->created_at}}" readonly>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="updated_by" class="form-label">Modified by</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="updated_by" value="{{$permission->updated_by}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-group row">
+                                    <div class="col-2">
+                                        <label for="updated_at" class="form-label">Modification Date</label>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="text" class="form-control" name="updated_at" value="{{$permission->updated_at}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
                     </div>
+
+
                 </div>
             </div>
             

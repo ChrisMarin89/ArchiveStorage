@@ -113,68 +113,68 @@
                 </div>
 
                 <div class="chart tab-pane" id="status-chart" style="position: relative;">
-                <div class="chartjs-size-monitor">
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="name" class="form-label">Created By</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <input type="text" class="form-control" name="created_by" value="{{$user->created_by}}" readonly>
-                                    </div>
+                    <div class="chartjs-size-monitor">
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="created_by" class="form-label">Created By</label>
+                                </div>
+                                <div class="col-2">
+                                    <input type="text" class="form-control" name="created_by" value="{{$user->created_by}}" readonly>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="name" class="form-label">Creation Date</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <input type="text" class="form-control" name="created_at" value="{{$user->created_at}}" readonly>
-                                    </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="created_at" class="form-label">Creation Date</label>
+                                </div>
+                                <div class="col-2">
+                                    <input type="text" class="form-control" name="created_at" value="{{$user->created_at}}" readonly>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="lastname" class="form-label">Modified by</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <input type="text" class="form-control" name="updated_by" value="{{$user->updated_by}}" readonly>
-                                    </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="updated_by" class="form-label">Modified by</label>
+                                </div>
+                                <div class="col-2">
+                                    <input type="text" class="form-control" name="updated_by" value="{{$user->updated_by}}" readonly>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="lastname" class="form-label">Modification Date</label>
-                                    </div>
-                                    <div class="col-2">
-                                        <input type="text" class="form-control" name="updated_at" value="{{$user->updated_at}}" readonly>
-                                    </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="updated_at" class="form-label">Modification Date</label>
+                                </div>
+                                <div class="col-2">
+                                    <input type="text" class="form-control" name="updated_at" value="{{$user->updated_at}}" readonly>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="email" class="form-label">Total Logins</label>
-                                    </div>  
-                                    <div class="col-2">
-                                        <input type="email" class="form-control" name="logins" value="{{$user->login_count}}" readonly>
-                                    </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="login_count" class="form-label">Total Logins</label>
+                                </div>  
+                                <div class="col-2">
+                                    <input type="text" class="form-control" name="login_count" value="{{$user->login_count}}" readonly>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="email" class="form-label">Last Login</label>
-                                    </div>  
-                                    <div class="col-2">
-                                        <input type="email" class="form-control" name="logins" value="{{$user->last_login_at}}" readonly>
-                                    </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group row">
+                                <div class="col-2">
+                                    <label for="last_login_at" class="form-label">Last Login</label>
+                                </div>  
+                                <div class="col-2">
+                                    <input type="text" class="form-control" name="last_login_at" value="{{$user->last_login_at}}" readonly>
                                 </div>
                             </div>
-                        </div>   
+                        </div>
+                    </div>   
                 </div>
             </div>
         </div>

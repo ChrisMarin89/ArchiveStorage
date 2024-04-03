@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoleFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Models\Permission;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -42,10 +46,11 @@ class RoleController extends Controller
     {
         $role = new Role();
         $role->name = request('name');
+        $role->description = request('description');
         $role->guard_name = 'web';
-
-        $role->save();
-        return redirect('/roles');
+        $author = is_object(Auth::user()) ? Auth::user()->email : 'System';
+        $role->created_by = $author;
+        $role->updated_by = $author;
     }
 
     /**
@@ -56,7 +61,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('roles.show', ['role' => Role::findOrFail($id)]); 
+        return view('roles.show', ['role' => Role::findOrFail($id), 'users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]); 
     }
 
     /**
@@ -67,7 +72,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('roles.edit', ['role' => Role::findOrFail($id)]); 
+        return view('roles.edit', ['role' => Role::findOrFail($id), 'users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]); 
     }
 
     /**
@@ -80,7 +85,19 @@ class RoleController extends Controller
     public function update(RoleFormRequest $request, $id)
     {
         $role = Role::findOrFail($id);
-        $role->name = $request->get('name');
+        // The name cannot be changed in Spatie Permissions (Create or Delete Role only)
+        //$role->name = $request->get('name');
+        $role->description = $request->get('description');
+        $role->updated_by = is_object(Auth::user()) ? Auth::user()->email : 'System';
+        $users = User::whereNotIn('id', User::SuperAdminIDs())->get();
+        
+        //foreach ($users as $user) $user->removeRole($role->name);
+        if(!is_null($request->get('users'))){
+            foreach($request->get('users') as $user_id){
+                $user = USER::findOrFail($user_id);
+                if(!$user->hasRole($role->name)) $user->syncRoles([$role->name]);
+            }
+        }
 
         $role->update();
         return redirect('/roles');

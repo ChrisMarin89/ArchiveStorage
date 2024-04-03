@@ -24,7 +24,15 @@ class RoleFormRequest extends FormRequest
     public function rules()
     {
         //dd($this->role);
-        if($this->role)     return ['name' => 'required|max:255|unique:roles,name,' . $this->role,];
-        else                return ['name' => 'required|max:255|unique:roles,name'];
+        if($this->role)   
+            return [
+                'name' => 'required|max:255|unique:roles,name,' . $this->role,
+                'description' => 'max:255',
+            ];
+        else 
+            return [
+                'name' => 'required|max:255|unique:roles,name',
+                'description' => 'max:255',
+            ];
     }
 }

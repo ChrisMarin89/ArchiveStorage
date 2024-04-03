@@ -6,6 +6,7 @@ use App\Http\Requests\PermissionFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Permission;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PermissionController extends Controller
@@ -43,7 +44,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permissions.create');
+        return view('permissions.create', ['users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]); 
     }
 
     /**
@@ -56,9 +57,22 @@ class PermissionController extends Controller
     {
         $permission = new Permission();
         $permission->name = request('name');
+        $permission->description = request('description');
         $permission->guard_name = 'web';
-
+        $author = is_object(Auth::user()) ? Auth::user()->email : 'System';
+        $permission->created_by = $author;
+        $permission->updated_by = $author;
         $permission->save();
+
+        // Reset cached roles and permissions
+        app()['cache']->forget('spatie.permission.cache');
+        
+        if(!is_null($request->get('users'))){
+            foreach($request->get('users') as $user_id){
+                USER::findOrFail($user_id)->givePermissionTo($permission->name);
+            }
+        }
+
         return redirect('/permissions');
     }
 
@@ -70,7 +84,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        return view('permissions.show', ['permission' => Permission::findOrFail($id)]); 
+        return view('permissions.show', ['permission' => Permission::findOrFail($id), 'users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]);
     }
 
     /**
@@ -81,7 +95,8 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        return view('permissions.edit', ['permission' => Permission::findOrFail($id), 'users' => User::all()]); 
+        //dd(Permission::findOrFail($id));
+        return view('permissions.edit', ['permission' => Permission::findOrFail($id), 'users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]); 
     }
 
     /**
@@ -96,7 +111,10 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
         // The name cannot be changed in Spatie Permissions (Create or Delete Permission only)
         //$permission->name = $request->get('name');
-        $users = USER::all();
+        $permission->description = $request->get('description');
+        $permission->updated_by = is_object(Auth::user()) ? Auth::user()->email : 'System';
+        $users = User::whereNotIn('id', User::SuperAdminIDs())->get();
+        $permission->update();
         
         foreach ($users as $user) $user->revokePermissionTo($permission->name);
         if(!is_null($request->get('users'))){
@@ -106,7 +124,6 @@ class PermissionController extends Controller
             }
         }
 
-        $permission->update();
         return redirect('/permissions');
     }
 

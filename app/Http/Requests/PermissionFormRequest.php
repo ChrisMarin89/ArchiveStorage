@@ -24,7 +24,15 @@ class PermissionFormRequest extends FormRequest
     public function rules()
     {
         //dd($this->permission);
-        if($this->permission)   return ['name' => 'required|max:255|unique:permissions,name,' . $this->permission,];
-        else                    return ['name' => 'required|max:255|unique:permissions,name'];
+        if($this->permission)   
+            return [
+                'name' => 'required|max:255|unique:permissions,name,' . $this->permission,
+                'description' => 'max:255',
+            ];
+        else 
+            return [
+                'name' => 'required|max:255|unique:permissions,name',
+                'description' => 'max:255',
+            ];
     }
 }

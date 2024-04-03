@@ -8,7 +8,7 @@
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h6 class="mt-2">Manage Profiles</h6>
+                        <h6 class="mt-2">Manage Roles</h6>
                     </div><!-- /.col -->
                     <div class="col-sm-6 float-sm-right">
                         <ol class="breadcrumb float-sm-right">
@@ -31,7 +31,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
-                            <th scope="col" class="text-right"  >
+                            <th scope="col">Description</th>
+                            <th scope="col" class="text-right">
                                 Options
                                 <a href="{{route('roles.create')}}">
                                     <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-plus"></i></button>
@@ -43,6 +44,7 @@
                         @foreach($roles as $role)
                             <tr>
                                 <td>{{$role->name}}</td>
+                                <td>{{$role->description}}</td>
                                 <td class="text-right">
                                     <form action="{{route('roles.destroy', $role->id)}}" method="POST">
                                         <a href="{{route('roles.show', $role->id)}}">
@@ -61,10 +63,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row">
-                <div class="mx-auto">
-                </div>
-            </div>
+
         </div>
         <div class="col-1"></div>
     </div>

@@ -31,6 +31,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
+                            <th scope="col">Description</th>
                             <th scope="col" class="text-right">
                                 Options
                                 <a href="{{route('permissions.create')}}">
@@ -42,12 +43,14 @@
                             <form class="form-inline ml-3">
                                 @if($search)
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search" value="{{$search['name']}}"></td>
+                                    <td></td>
                                     <td class="text-right">
                                         <button class="btn btn-navbar" type="submit"><i class="fas fa-filter"></i></button>
                                         <button type="reset" class="btn btn-light btn-sm py-0"><a href="/permissions" style="color: rgba(0, 0, 0, 0.9);">Clear</a></button>
                                     </td>
                                 @else
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search"></td>
+                                    <td></td>
                                     <td class="text-right">
                                         <button class="btn btn-navbar" type="submit"><i class="fas fa-filter"></i></button>
                                         <button type="reset" class="btn btn-light btn-sm py-0"><a href="/permissions" style="color: rgba(0, 0, 0, 0.9);">Clear</a></button>
@@ -60,6 +63,7 @@
                         @foreach($permissions as $permission)
                             <tr>
                                 <td>{{$permission->name}}</td>
+                                <td>{{$permission->description}}</td>
                                 <td class="text-right">
                                     <form action="{{route('permissions.destroy', $permission->id)}}" method="POST">
                                         <a href="{{route('permissions.show', $permission->id)}}">
