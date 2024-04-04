@@ -13,6 +13,13 @@ class PermissionController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('permission:app-permissions-create|app-permissions-read|app-permissions-update|app-permissions-delete')->only('index');
+        $this->middleware('permission:app-permissions-create')->only('store');
+        $this->middleware('permission:app-permissions-create')->only('create');
+        $this->middleware('permission:app-permissions-read')->only('show');
+        $this->middleware('permission:app-permissions-update')->only('update');
+        $this->middleware('permission:app-permissions-delete')->only('destroy');
+        $this->middleware('permission:app-permissions-update')->only('edit');
     }
     /**
      * Display a listing of the resource.

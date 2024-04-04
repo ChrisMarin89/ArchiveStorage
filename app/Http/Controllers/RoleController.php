@@ -14,6 +14,13 @@ class RoleController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('permission:app-roles-read|app-roles-update')->only('index');
+        $this->middleware('permission:app-roles-read')->only('store');
+        $this->middleware('permission:app-roles-read')->only('create');
+        $this->middleware('permission:app-roles-read')->only('show');
+        $this->middleware('permission:app-roles-update')->only('update');
+        $this->middleware('permission:app-roles-update')->only('destroy');
+        $this->middleware('permission:app-roles-update')->only('edit');
     }
     /**
      * Display a listing of the resource.
