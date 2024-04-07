@@ -22,8 +22,8 @@
         <link rel="stylesheet" href="{{asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.css')}}">
         <?php 
             use App\Models\User;
-            use App\Models\Permission;
-            use App\Models\Role;
+            use Spatie\Permission\Models\Permission;
+            use Spatie\Permission\Models\Role;
         ?>
     </head>
     <body class="hold-transition sidebar-mini">
@@ -161,7 +161,7 @@
                                             <a href="/permissions" class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fas fa-tasks ml-3"></i>
                                                 <p>Permissions</p>
-                                                <?php $permissions_count = Permission::whereNotIn('id', Permission::AppPermissionsIDs())->get()->count(); ?>
+                                                <?php $permissions_count = Permission::where('name', 'LIKE', 'web-%')->get()->count(); ?>
                                                 <span class="right badge badge-info">{{ $permissions_count ?? '0' }}</span>
                                             </a>
                                         </li>
@@ -169,7 +169,7 @@
                                             <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-address-card ml-3"></i>
                                                 <p>Profiles</p>
-                                                <?php $roles_count = Role::whereNotIn('id', Role::SuperAdminIDs())->get()->count(); ?>
+                                                <?php $roles_count = Role::where('name', '!=', 'SuperAdmin')->get()->count(); ?>
                                                 <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
                                             </a>
                                         </li>

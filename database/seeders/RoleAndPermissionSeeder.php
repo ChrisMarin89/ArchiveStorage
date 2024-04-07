@@ -3,13 +3,16 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RoleAndPermissionSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
         /***--PERMISSIONS--***/
         Permission::create(['name' => 'app-super-admin', 'created_by' => 'System', 'updated_by' => 'System']);
         //Users
@@ -17,7 +20,7 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'app-users-read', 'created_by' => 'System', 'updated_by' => 'System']);
         Permission::create(['name' => 'app-users-update', 'created_by' => 'System', 'updated_by' => 'System']);
         Permission::create(['name' => 'app-users-delete', 'created_by' => 'System', 'updated_by' => 'System']);
-        //Permission
+        //Permissions
         Permission::create(['name' => 'app-permissions-create', 'created_by' => 'System', 'updated_by' => 'System']);
         Permission::create(['name' => 'app-permissions-read', 'created_by' => 'System', 'updated_by' => 'System']);
         Permission::create(['name' => 'app-permissions-update', 'created_by' => 'System', 'updated_by' => 'System']);
@@ -35,44 +38,45 @@ class RoleAndPermissionSeeder extends Seeder
 
 
         /***--ROLES--***/
-        // GATE Auth returns "true" for all permissions //
-        $superAdminRole = Role::create(['name' => 'SuperAdmin', 'created_by' => 'System', 'updated_by' => 'System']);
-        // Rest of permissions //
-        $adminRole = Role::create(['name' => 'Admin', 'created_by' => 'System', 'updated_by' => 'System']);
-        $managerRole = Role::create(['name' => 'Manager', 'created_by' => 'System', 'updated_by' => 'System']);
-        $collabRole = Role::create(['name' => 'Collab', 'created_by' => 'System', 'updated_by' => 'System']);
-        $userRole = Role::create(['name' => 'User', 'created_by' => 'System', 'updated_by' => 'System']);
+        //SuperAdmin
+        Role::create(['name' => 'SuperAdmin', 'created_by' => 'System', 'updated_by' => 'System'])
+                ->givePermissionTo('app-super-admin');
+        //Admin
+        Role::create(['name' => 'Admin', 'created_by' => 'System', 'updated_by' => 'System'])
+                ->givePermissionTo([
+                    'app-users-create',
+                    'app-users-read',
+                    'app-users-update',
+                    'app-users-delete',
+                    'app-permissions-create',
+                    'app-permissions-read',
+                    'app-permissions-update',
+                    'app-permissions-delete',
+                    'app-roles-read',
+                    'app-roles-update',
+                ]);
+        //Manager
+        Role::create(['name' => 'Manager', 'created_by' => 'System', 'updated_by' => 'System'])
+                ->givePermissionTo([
+                    'app-users-create',
+                    'app-users-read',
+                    'app-users-update',
+                    'app-users-delete',
+                    'app-permissions-read',
+                    'app-permissions-update',
+                    'app-roles-read',
+                ]);
+        //Collab
+        Role::create(['name' => 'Collab', 'created_by' => 'System', 'updated_by' => 'System'])
+                ->givePermissionTo([
+                    'app-users-read',
+                    'app-permissions-read',
+                    'app-roles-read',
+                ]);
+        //User
+        Role::create(['name' => 'User', 'created_by' => 'System', 'updated_by' => 'System']);
 
-        /***--Asign Permissions to Roles--***/
-        $superAdminRole->givePermissionTo([
-            'app-super-admin',
-        ]);
-        $adminRole->givePermissionTo([
-            'app-users-create',
-            'app-users-read',
-            'app-users-update',
-            'app-users-delete',
-            'app-permissions-create',
-            'app-permissions-read',
-            'app-permissions-update',
-            'app-permissions-delete',
-            'app-roles-read',
-            'app-roles-update',
-        ]);
-        $managerRole->givePermissionTo([
-            'app-users-create',
-            'app-users-read',
-            'app-users-update',
-            'app-users-delete',
-            'app-permissions-read',
-            'app-permissions-update',
-            'app-roles-read',
-        ]);
-        $collabRole->givePermissionTo([
-            'app-users-read',
-            'app-permissions-read',
-            'app-roles-read',
-        ]);
-        //$userRole->givePermissionTo([]);
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
     }
 }

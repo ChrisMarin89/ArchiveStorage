@@ -37,6 +37,9 @@
                         <a class="nav-link" href="#users-chart" data-toggle="tab" style="color: rgba(0, 0, 0, 0.9);">Users</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#permissions-chart" data-toggle="tab" style="color: rgba(0, 0, 0, 0.9);">Permissions</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#status-chart" data-toggle="tab" style="color: rgba(0, 0, 0, 0.9);">Status</a>
                     </li>
                 </ul>
@@ -85,6 +88,31 @@
                                 var duallistbox = $('.duallistbox').bootstrapDualListbox({
                                     nonSelectedListLabel: 'Available Users',
                                     selectedListLabel: 'Assigned Users',
+                                    infoText: false,
+                                    infoTextFiltered: false,
+                                    selectorMinimalHeight: 300
+
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="chart tab-pane" id="permissions-chart" style="position: relative;">
+                        <div class="chartjs-size-monitor">
+                            <select multiple="multiple" name="permissions[]" class="duallistbox" title="duallistbox">
+                                @foreach($permissions as $permission)
+                                    @if($role->hasPermissionTo($permission->name))
+                                        <option value="{{$permission->name}}" selected="selected">{{$permission->name}}</option>
+                                    @else
+                                        <option value="{{$permission->name}}">{{$permission->name}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        
+                            <script>
+                                var duallistbox = $('.duallistbox').bootstrapDualListbox({
+                                    nonSelectedListLabel: 'Available Permissions',
+                                    selectedListLabel: 'Assigned Permissions',
                                     infoText: false,
                                     infoTextFiltered: false,
                                     selectorMinimalHeight: 300

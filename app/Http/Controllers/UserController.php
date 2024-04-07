@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserFormRequest;
 use App\Models\User;
-use App\Models\Permission;
-use App\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -130,8 +130,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $permissions = DB::table('permissions')
-                            ->where('name', 'NOT LIKE', 'app-%')
-                            ->orderBy('name', 'asc')->paginate(15);
+                            ->where('name', 'LIKE', 'web-%')
+                            ->orderBy('name', 'asc')->get();
         
         return view('users.show', ['user' => $user, 'permissions' => $permissions]);
     }
@@ -146,9 +146,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $permissions = DB::table('permissions')
-                        ->where('name', 'NOT LIKE', 'app-%')
-                        ->orderBy('name', 'asc')->paginate(15);
-        $roles = Role::whereNotIn('id', Role::SuperAdminIDs())->get(); 
+                        ->where('name', 'LIKE', 'web-%')
+                        ->orderBy('name', 'asc')->get();
+        $roles = Role::where('name', '!=', 'SuperAdmin')->get(); 
         
         return view('users.edit', ['user' => $user, 'permissions' => $permissions, 'roles' => $roles]);
     }

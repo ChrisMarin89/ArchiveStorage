@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PermissionFormRequest;
 use Illuminate\Http\Request;
-use App\Models\Permission;
+use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +33,7 @@ class PermissionController extends Controller
         if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
         else $search['name'] = str_replace('*', '%', $search['name']);
 
-        $permissions = Permission::whereNotIn('id', Permission::AppPermissionsIDs())
+        $permissions = Permission::where('name', 'NOT LIKE', 'app-%')
                             ->where('name', 'LIKE', $search['name'])
                             ->orderBy('name', 'asc')
                             ->paginate(15);
@@ -76,7 +76,7 @@ class PermissionController extends Controller
         
         if(!is_null($request->get('users'))){
             foreach($request->get('users') as $user_id){
-                USER::findOrFail($user_id)->givePermissionTo($permission->name);
+                User::findOrFail($user_id)->givePermissionTo($permission->name);
             }
         }
 

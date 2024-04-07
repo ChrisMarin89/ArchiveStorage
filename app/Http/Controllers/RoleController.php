@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleFormRequest;
 use Illuminate\Http\Request;
-use App\Models\Role;
-use App\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +29,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::whereNotIn('id', Role::SuperAdminIDs())->orderBy('id', 'asc')->get();
+        $roles = Role::where('name', '!=', 'SuperAdmin')->orderBy('id', 'asc')->get();
         return view('roles.index', ['roles' => $roles]);
     }
 
@@ -79,7 +79,16 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('roles.edit', ['role' => Role::findOrFail($id), 'users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]); 
+        $role = Role::findOrFail($id);
+
+        $users =  User::whereNotIn('id', User::SuperAdminIDs())->get();
+
+        $permissions = DB::table('permissions')
+                        ->where('name', 'LIKE', 'app-%')
+                        ->where('name', '!=', 'app-super-admin')
+                        ->orderBy('name', 'asc')->paginate(15);
+
+        return view('roles.edit', ['role' => $role, 'users' => $users, 'permissions' => $permissions]); 
     }
 
     /**
@@ -101,10 +110,12 @@ class RoleController extends Controller
         //foreach ($users as $user) $user->removeRole($role->name);
         if(!is_null($request->get('users'))){
             foreach($request->get('users') as $user_id){
-                $user = USER::findOrFail($user_id);
+                $user = User::findOrFail($user_id);
                 if(!$user->hasRole($role->name)) $user->syncRoles([$role->name]);
             }
         }
+        if(!is_null($request->get('permissions'))) $role->syncPermissions($request->get('permissions'));
+        else foreach($role->getPermissionNames() as $revoved_permission) $role->revokePermissionTo($revoved_permission);
 
         $role->update();
         return redirect('/roles');
