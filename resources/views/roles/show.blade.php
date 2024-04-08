@@ -33,6 +33,9 @@
                     <a class="nav-link" href="#users-chart" data-toggle="tab" style="color: rgba(0, 0, 0, 0.9);">Users</a>
                 </li>
                 <li class="nav-item">
+                        <a class="nav-link" href="#permissions-chart" data-toggle="tab" style="color: rgba(0, 0, 0, 0.9);">Permissions</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#status-chart" data-toggle="tab" style="color: rgba(0, 0, 0, 0.9);">Status</a>
                 </li>
             </ul>
@@ -82,6 +85,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="chart tab-pane" id="permissions-chart" style="position: relative;">
+                        <div class="chartjs-size-monitor">
+                            <div class="col-3">
+                                <table class="table table-hover table-sm table-striped" style="text-align: center;">
+                                    <tbody>
+                                        @foreach($permissions as $permission)
+                                            @if($role->hasPermissionTo($permission->name))
+                                                <tr>
+                                                    <td>{{$permission->name}}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
                 <div class="chart tab-pane" id="status-chart" style="position: relative;">
                     <div class="chartjs-size-monitor">

@@ -40,7 +40,15 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+
+        $users =  User::whereNotIn('id', User::SuperAdminIDs())->get();
+
+        $permissions = DB::table('permissions')
+                        ->where('name', 'LIKE', 'app-%')
+                        ->where('name', '!=', 'app-super-admin')
+                        ->orderBy('name', 'asc')->paginate(15);
+
+        return view('roles.create', ['users' => $users, 'permissions' => $permissions]);
     }
 
     /**
@@ -58,6 +66,23 @@ class RoleController extends Controller
         $author = is_object(Auth::user()) ? Auth::user()->email : 'System';
         $role->created_by = $author;
         $role->updated_by = $author;
+        $role->save();
+
+        // Reset cached roles and permissions
+        app()['cache']->forget('spatie.permission.cache');
+
+        $users = User::whereNotIn('id', User::SuperAdminIDs())->get();
+        
+        if(!is_null($request->get('users'))){
+            foreach($request->get('users') as $user_id){
+                $user = User::findOrFail($user_id);
+                if(!$user->hasRole($role->name)) $user->syncRoles([$role->name]);
+            }
+        }
+        if(!is_null($request->get('permissions'))) $role->syncPermissions($request->get('permissions'));
+        else foreach($role->getPermissionNames() as $revoved_permission) $role->revokePermissionTo($revoved_permission);
+
+        return redirect('/roles');
     }
 
     /**
@@ -68,7 +93,16 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('roles.show', ['role' => Role::findOrFail($id), 'users' => User::whereNotIn('id', User::SuperAdminIDs())->get()]); 
+        $role = Role::findOrFail($id);
+
+        $users =  User::whereNotIn('id', User::SuperAdminIDs())->get();
+
+        $permissions = DB::table('permissions')
+                        ->where('name', 'LIKE', 'app-%')
+                        ->where('name', '!=', 'app-super-admin')
+                        ->orderBy('name', 'asc')->paginate(15);
+
+        return view('roles.show', ['role' => $role, 'users' => $users, 'permissions' => $permissions]); 
     }
 
     /**
