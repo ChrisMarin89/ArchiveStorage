@@ -16,10 +16,10 @@ class RoleController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:app-roles-read|app-roles-update')->only('index');
         $this->middleware('permission:app-roles-read')->only('store');
-        $this->middleware('permission:app-roles-read')->only('create');
+        $this->middleware('permission:app-super-admin')->only('create');
         $this->middleware('permission:app-roles-read')->only('show');
         $this->middleware('permission:app-roles-update')->only('update');
-        $this->middleware('permission:app-roles-update')->only('destroy');
+        $this->middleware('permission:app-super-admin')->only('destroy');
         $this->middleware('permission:app-roles-update')->only('edit');
     }
     /**

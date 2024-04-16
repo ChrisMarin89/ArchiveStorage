@@ -143,7 +143,7 @@
                                 </li>
                                 <!-- /.cabinets -->
                                 <!-- Admin tools -->
-                                <li class="{{in_array(explode('/', str_ireplace(array('http://', 'https://'), '', Request::path()))[0], array('users','permissions','roles')) ? 'nav-item has-treeview menu-is-opening menu-open' : 'nav-item has-treeview' }}">
+                                <li class="{{in_array(explode('/', str_ireplace(array('http://', 'https://'), '', Request::path()))[0], array('users','permissions','roles', 'config')) ? 'nav-item has-treeview menu-is-opening menu-open' : 'nav-item has-treeview' }}">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fas fa-users-cog"></i>
                                         <p>Admin tools<i class="fas fa-angle-left right"></i></p>

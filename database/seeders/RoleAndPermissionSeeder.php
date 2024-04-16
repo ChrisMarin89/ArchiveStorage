@@ -28,6 +28,8 @@ class RoleAndPermissionSeeder extends Seeder
         //Roles
         Permission::create(['name' => 'app-roles-read', 'created_by' => 'System', 'updated_by' => 'System']);
         Permission::create(['name' => 'app-roles-update', 'created_by' => 'System', 'updated_by' => 'System']);
+        //Config
+        Permission::create(['name' => 'app-config-manage', 'created_by' => 'System', 'updated_by' => 'System']);
         //Web Normal permission demo
         Permission::create(['name' => 'web-in-invoices', 'created_by' => 'System', 'updated_by' => 'System']);
         Permission::create(['name' => 'web-out-invoices', 'created_by' => 'System', 'updated_by' => 'System']);
@@ -54,6 +56,7 @@ class RoleAndPermissionSeeder extends Seeder
                     'app-permissions-delete',
                     'app-roles-read',
                     'app-roles-update',
+                    'app-config-manage',
                 ]);
         //Manager
         Role::create(['name' => 'Manager', 'created_by' => 'System', 'updated_by' => 'System'])
