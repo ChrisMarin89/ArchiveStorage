@@ -9,7 +9,7 @@ class ConfigController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('permission:app-config-manage')->only('index');
+        $this->middleware('permission:app-config-manage');
     }
     /**
      * Display a listing of the resource.
@@ -18,6 +18,6 @@ class ConfigController extends Controller
      */
     public function index()
     {
-        return view('config');
+        return view('config.index');
     }
 }

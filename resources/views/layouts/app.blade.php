@@ -47,7 +47,7 @@
                         <!-- Profile Dropdown Menu -->
                         <li class="nav-item dropdown">
                             <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="nav-link dropdown-toggle">
-                            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="brand-image img-circle elevation-3" width="32" height="32">
+                                <!-- <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="brand-image img-circle elevation-3" width="32" height="32"> -->
                                 {{ Auth::user()->name . ' ' . Auth::user()->lastname}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

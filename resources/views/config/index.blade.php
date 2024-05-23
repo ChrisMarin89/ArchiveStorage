@@ -25,19 +25,24 @@
 <!-- Main content -->
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Configs</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-header"><p class="h6 text-center font-weight-bold">Settings</p></div> 
+            <div class="card-body">
+                <a href="/config/globalconfigs" style="color: rgba(0, 0, 0, 0.9);"><p>- Global Configurations</p></a>
+                <p>- Parser Templates (Json)</p>
+            </div>
+        </div>
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-header"><p class="h6 text-center font-weight-bold">Triggers</p></div> 
+            <div class="card-body">
+                <p>- Schedule Tasks</p>
+                <p>- File Imports</p>
+            </div>
+        </div>
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-header"><p class="h6 text-center font-weight-bold">Monitoring</p></div> 
+            <div class="card-body">
+                <p>- Service Status</p>
             </div>
         </div>
     </div>
