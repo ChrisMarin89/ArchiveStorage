@@ -87,8 +87,7 @@
                             <div class="row">
                                 <div class="col">
                                     <i class="fas fa-server"></i>
-                                </div>
-                                <div class="col">
+                                    <i class="fas fa-fw"></i>
                                     <span class="brand-text font-weight-light">Archive Server</span>
                                 </div>
                                 <div class="col"></div>

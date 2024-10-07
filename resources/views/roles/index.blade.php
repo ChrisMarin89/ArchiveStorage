@@ -34,9 +34,11 @@
                             <th scope="col">Description</th>
                             <th scope="col" class="text-right">
                                 Options
+                                @can('app-super-admin')
                                 <a href="{{route('roles.create')}}">
                                     <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-plus"></i></button>
                                 </a>
+                                @endcan
                             </th>
                         </tr>
                     </thead>
@@ -46,16 +48,23 @@
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->description}}</td>
                                 <td class="text-right">
-                                    @can('app-roles-read')
-                                        <a href="{{route('roles.show', $role->id)}}">
-                                            <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
-                                        </a>
-                                    @endcan
-                                    @can('app-roles-update')
-                                        <a href="{{route('roles.edit', $role->id)}}">
-                                            <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
-                                        </a>
-                                    @endcan
+                                    <form action="{{route('roles.destroy', $role->id)}}" method="POST">
+                                        @can('app-roles-read')
+                                            <a href="{{route('roles.show', $role->id)}}">
+                                                <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
+                                            </a>
+                                        @endcan
+                                        @can('app-roles-update')
+                                            <a href="{{route('roles.edit', $role->id)}}">
+                                                <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
+                                            </a>
+                                        @endcan
+                                        @method('DELETE')
+                                        @csrf
+                                        @can('app-super-admin')
+                                            <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>
+                                        @endcan
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
