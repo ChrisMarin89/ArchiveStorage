@@ -23,15 +23,17 @@ class GlobalConfigurationFormRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->name);
-        if($this->name)   
+        //dd($this->globalconfig);
+        if($this->globalconfig)  
             return [
+                'name' => 'required|max:255|without_spaces|unique:global_configurations,name,' . $this->globalconfig,
                 'description' => 'max:255',
                 'value' => 'required|max:255',
                 'type' => 'required|max:255',
             ];
         else 
             return [
+                'name' => 'required|max:255|without_spaces|unique:global_configurations,name',
                 'description' => 'max:255',
                 'value' => 'required|max:255',
                 'type' => 'required|max:255',

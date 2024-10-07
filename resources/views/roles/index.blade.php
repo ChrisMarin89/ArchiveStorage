@@ -8,7 +8,7 @@
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h6 class="mt-2">Manage Roles</h6>
+                        <h6 class="mt-2">Manage Roles ({{count($roles)}})</h6>
                     </div><!-- /.col -->
                     <div class="col-sm-6 float-sm-right">
                         <ol class="breadcrumb float-sm-right">

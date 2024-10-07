@@ -18,6 +18,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/config', 'ConfigController@index')->name('config');
 
 Route::resource('/users', 'UserController');
+Route::resource('/profile', 'ProfileController');
 
 Route::resource('/roles', 'RoleController');
 

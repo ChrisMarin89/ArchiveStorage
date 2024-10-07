@@ -20,11 +20,6 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="{{asset('plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js')}}"></script>
         <link rel="stylesheet" href="{{asset('plugins/bootstrap4-duallistbox/bootstrap-duallistbox.css')}}">
-        <?php 
-            use App\Models\User;
-            use Spatie\Permission\Models\Permission;
-            use Spatie\Permission\Models\Role;
-        ?>
     </head>
     <body class="hold-transition sidebar-mini">
         <div id="app">
@@ -51,13 +46,13 @@
                                 {{ Auth::user()->name . ' ' . Auth::user()->lastname}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{route('profile.edit', 1)}}">
                                     <!-- Profile Start -->
                                     <div class="media">
                                         <div class="media-body">
                                             <h3 class="dropdown-item-title">
-                                                Settings
-                                                <span class="float-right text-sm text-muted"><i class="fas fa-cog"></i></span>
+                                                    Settings
+                                                    <span class="float-right text-sm text-muted"><i class="fas fa-cog"></i></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -153,24 +148,20 @@
                                             <a href="/users" class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fa-users ml-3"></i>
                                                 <p>Users</p>
-                                                <?php $users_count = User::whereNotIn('id', User::SuperAdminIDs())->get()->count(); ?>
-                                                <span class="right badge badge-info">{{ $users_count ?? '0' }}</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="/permissions" class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fas fa-tasks ml-3"></i>
                                                 <p>Permissions</p>
-                                                <?php $permissions_count = Permission::where('name', 'LIKE', 'web-%')->get()->count(); ?>
-                                                <span class="right badge badge-info">{{ $permissions_count ?? '0' }}</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-address-card ml-3"></i>
                                                 <p>Profiles</p>
-                                                <?php $roles_count = Role::where('name', '!=', 'SuperAdmin')->get()->count(); ?>
-                                                <span class="right badge badge-info">{{ $roles_count ?? '0' }}</span>
+                                                <!-- $count = ::where('name', '!=', 'SuperAdmin')->get()->count(); ?>
+                                                <span class="right badge badge-info">{{ $count ?? '0' }}</span> -->
                                             </a>
                                         </li>
                                         <li class="nav-item">

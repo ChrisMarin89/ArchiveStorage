@@ -129,6 +129,8 @@ return [
     |
     */
 
+    'without_spaces' => 'El campo :attribute no permite espacios en blanco.',
+
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',

@@ -50,6 +50,8 @@ class UserController extends Controller
         if(is_null($search['lang']) || $search['lang'] == '') $search['lang'] = '%';
         else $search['lang'] = str_replace('*', '%', $search['lang']);
 
+        // DB::connection('tenant_xyz')->table('some_table')->get();
+
         $users = DB::table('users')
                     ->select('users.*', 'roles.name as profile')
                     ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')

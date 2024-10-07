@@ -24,7 +24,6 @@ class UserFormRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->user);
         if($this->user){
             return [
                 'name' => 'required|max:255',

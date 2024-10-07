@@ -8,7 +8,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h6 class="mt-2">Global Configurations</h6>
+                            <h6 class="mt-2">Global Configurations ({{count($gcs)}})</h6>
                         </div><!-- /.col -->
                         <div class="col-sm-6 float-sm-right">
                             <ol class="breadcrumb float-sm-right">
@@ -67,9 +67,9 @@
                         @foreach($gcs as $gc)
                             <tr>
                                 <td><a href="{{route('globalconfigs.edit', $gc->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$gc->name}}</a></td>
-                                <td>{{$gc->description}}</td>
-                                <td>{{$gc->value}}</td>
-                                <td>{{$gc->data_type}}</td>
+                                <td><a href="{{route('globalconfigs.edit', $gc->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$gc->description}}</a></td>
+                                <td><a href="{{route('globalconfigs.edit', $gc->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$gc->value}}</a></td>
+                                <td><a href="{{route('globalconfigs.edit', $gc->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$gc->data_type}}</a></td>
                                 <td class="text-right">
                                     <form action="{{route('globalconfigs.destroy', $gc->id)}}" method="POST">
                                         @method('DELETE')
