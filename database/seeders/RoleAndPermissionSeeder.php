@@ -41,10 +41,10 @@ class RoleAndPermissionSeeder extends Seeder
 
         /***--ROLES--***/
         //SuperAdmin
-        Role::create(['name' => 'SuperAdmin', 'created_by' => 'System', 'updated_by' => 'System'])
+        Role::create(['name' => 'SuperAdmin', 'description' => 'Tier 0 permissions (hidden)', 'created_by' => 'System', 'updated_by' => 'System'])
                 ->givePermissionTo('app-super-admin');
         //Admin
-        Role::create(['name' => 'Admin', 'created_by' => 'System', 'updated_by' => 'System'])
+        Role::create(['name' => 'Admin', 'description' => 'Tier 1 permissions', 'created_by' => 'System', 'updated_by' => 'System'])
                 ->givePermissionTo([
                     'app-users-create',
                     'app-users-read',
@@ -59,7 +59,7 @@ class RoleAndPermissionSeeder extends Seeder
                     'app-config-manage',
                 ]);
         //Manager
-        Role::create(['name' => 'Manager', 'created_by' => 'System', 'updated_by' => 'System'])
+        Role::create(['name' => 'Manager', 'description' => 'Tier 2 permissions', 'created_by' => 'System', 'updated_by' => 'System'])
                 ->givePermissionTo([
                     'app-users-create',
                     'app-users-read',
@@ -70,14 +70,14 @@ class RoleAndPermissionSeeder extends Seeder
                     'app-roles-read',
                 ]);
         //Collab
-        Role::create(['name' => 'Collab', 'created_by' => 'System', 'updated_by' => 'System'])
+        Role::create(['name' => 'Collab', 'description' => 'Tier 3 permissions', 'created_by' => 'System', 'updated_by' => 'System'])
                 ->givePermissionTo([
                     'app-users-read',
                     'app-permissions-read',
                     'app-roles-read',
                 ]);
         //User
-        Role::create(['name' => 'User', 'created_by' => 'System', 'updated_by' => 'System']);
+        Role::create(['name' => 'User', 'description' => 'Tier 4 permissions', 'created_by' => 'System', 'updated_by' => 'System']);
 
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();

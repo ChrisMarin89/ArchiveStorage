@@ -137,6 +137,12 @@
                                     </ul>
                                 </li>
                                 <!-- /.cabinets -->
+                                @canany([
+                                    'app-users-create', 'app-users-read', 'app-users-update', 'app-users-delete',
+                                    'app-permissions-create', 'app-permissions-read', 'app-permissions-update', 'app-permissions-delete',
+                                    'app-roles-read', 'app-roles-update',
+                                    'app-config-manage'                                
+                                ])
                                 <!-- Admin tools -->
                                 <li class="{{in_array(explode('/', str_ireplace(array('http://', 'https://'), '', Request::path()))[0], array('users','permissions','roles', 'config')) ? 'nav-item has-treeview menu-is-opening menu-open' : 'nav-item has-treeview' }}">
                                     <a href="#" class="nav-link">
@@ -144,18 +150,29 @@
                                         <p>Admin tools<i class="fas fa-angle-left right"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
+                                        @canany([
+                                            'app-users-create', 'app-users-read', 'app-users-update', 'app-users-delete'                               
+                                        ])
                                         <li class="nav-item">
                                             <a href="/users" class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fa-users ml-3"></i>
                                                 <p>Users</p>
                                             </a>
                                         </li>
+                                        @endcanany
+                                        @canany([
+                                            'app-permissions-create', 'app-permissions-read', 'app-permissions-update', 'app-permissions-delete'                               
+                                        ])
                                         <li class="nav-item">
                                             <a href="/permissions" class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
                                                 <i class="nav-icon fas fas fa-tasks ml-3"></i>
                                                 <p>Permissions</p>
                                             </a>
                                         </li>
+                                        @endcanany
+                                        @canany([
+                                            'app-roles-read', 'app-roles-update'                          
+                                        ])
                                         <li class="nav-item">
                                             <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-address-card ml-3"></i>
@@ -164,14 +181,20 @@
                                                 <span class="right badge badge-info">{{ $count ?? '0' }}</span> -->
                                             </a>
                                         </li>
+                                        @endcanany
+                                        @canany([
+                                            'app-config-manage'                          
+                                        ])
                                         <li class="nav-item">
                                             <a href="/config" class="{{ Request::path() === 'config' ? 'nav-link active' : 'nav-link' }} ">
                                                 <i class="nav-icon fas fa-cogs ml-3"></i>
                                                 <p>Configurations</p>
                                             </a>
                                         </li>
+                                        @endcanany
                                     </ul>
                                 </li>
+                                @endcanany
                                 <!-- /.admin-tools -->
                             </ul>
                         </nav>

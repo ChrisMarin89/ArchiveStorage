@@ -34,9 +34,11 @@
                             <th scope="col">Description</th>
                             <th scope="col" class="text-right">
                                 Options
+                                @can('app-permissions-create')
                                 <a href="{{route('permissions.create')}}">
                                     <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-plus"></i></button>
                                 </a>
+                                @endcan
                             </th>
                         </tr>
                         <tr>
@@ -64,19 +66,27 @@
                             <tr>
                                 <td>{{$permission->name}}</td>
                                 <td>{{$permission->description}}</td>
+                                @canany(['app-permissions-read', 'app-permissions-update', 'app-permissions-delete'])
                                 <td class="text-right">
                                     <form action="{{route('permissions.destroy', $permission->id)}}" method="POST">
-                                        <a href="{{route('permissions.show', $permission->id)}}">
-                                            <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
-                                        </a>
-                                        <a href="{{route('permissions.edit', $permission->id)}}">
-                                            <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
-                                        </a>
+                                        @can('app-permissions-read')
+                                            <a href="{{route('permissions.show', $permission->id)}}">
+                                                <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
+                                            </a>
+                                        @endcan
+                                        @can('app-permissions-update')
+                                            <a href="{{route('permissions.edit', $permission->id)}}">
+                                                <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
+                                            </a>
+                                        @endcan
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>
+                                        @can('app-permissions-delete')
+                                            <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>
+                                        @endcan
                                     </form>
                                 </td>
+                                @endcanany
                             </tr>
                         @endforeach
                     </tbody>

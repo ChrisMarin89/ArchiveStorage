@@ -46,17 +46,16 @@
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->description}}</td>
                                 <td class="text-right">
-                                    <form action="{{route('roles.destroy', $role->id)}}" method="POST">
+                                    @can('app-roles-read')
                                         <a href="{{route('roles.show', $role->id)}}">
                                             <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
                                         </a>
+                                    @endcan
+                                    @can('app-roles-update')
                                         <a href="{{route('roles.edit', $role->id)}}">
                                             <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
                                         </a>
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>
-                                    </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

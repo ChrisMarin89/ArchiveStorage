@@ -38,9 +38,11 @@
                             <th scope="col">Logins</th>
                             <th scope="col" class="text-right">
                                 Options
+                                @can('app-users-create')
                                 <a href="{{route('users.create')}}">
                                     <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-user-plus"></i></button>
                                 </a>
+                                @endcan
                             </th>
                         </tr>
                         <tr>
@@ -76,19 +78,27 @@
                                 <td>{{$user->profile}}</td>
                                 <td>{{$user->lang}}</td>
                                 <td style="text-align: center;">{{$user->login_count}}</td>
+                                @canany(['app-users-read', 'app-users-update', 'app-users-delete'])
                                 <td class="text-right">
                                     <form action="{{route('users.destroy', $user->id)}}" method="POST">
-                                        <a href="{{route('users.show', $user->id)}}">
-                                            <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
-                                        </a>
-                                        <a href="{{route('users.edit', $user->id)}}">
-                                            <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
-                                        </a>
+                                        @can('app-users-read')
+                                            <a href="{{route('users.show', $user->id)}}">
+                                                <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-search"></i></button>
+                                            </a>
+                                        @endcan
+                                        @can('app-users-update')
+                                            <a href="{{route('users.edit', $user->id)}}">
+                                                <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-pen"></i></button>
+                                            </a>
+                                        @endcan
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>
+                                        @can('app-users-delete')
+                                            <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>
+                                        @endcan
                                     </form>
                                 </td>
+                                @endcanany
                             </tr>
                         @endforeach
                     </tbody>
