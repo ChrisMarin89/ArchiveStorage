@@ -86,8 +86,7 @@
                         <div class="brand-link text-center">
                             <div class="row">
                                 <div class="col">
-                                    <i class="fas fa-server"></i>
-                                    <i class="fas fa-fw"></i>
+                                    <i class="fas fa-server ml-3  mr-3"></i>
                                     <span class="brand-text font-weight-light">Archive Server</span>
                                 </div>
                                 <div class="col"></div>
@@ -103,7 +102,7 @@
                                 <!-- Brand Logo -->
                                 <li class="nav-item">
                                     <a href="/" class="{{ Request::path() === '/' ? 'nav-link active' : 'nav-link' }}" style="{{ Request::path() === '/' ? 'background-color: #f8f9fa; color: #343a40' : '' }}">
-                                        <i class="nav-icon fas fa-home"></i>
+                                        <i class="fas fa-home mr-1"></i>
                                         <p>Home</p>
                                     </a>
                                 </li>
@@ -111,25 +110,25 @@
                                 <!-- Cabinets -->
                                 <li class="nav-item has-treeview">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-archive"></i>
+                                        <i class="fas fa-archive mr-1"></i>
                                         <p>{{__('Cabinets')}}<i class="fas fa-angle-left right"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
                                             <a href="notas/todas" class="{{ Request::path() === 'notas/todas' ? 'nav-link active' : 'nav-link' }} ml-3">
-                                                <i class="nav-icon fas fa-caret-right"></i>
+                                                <i class="fas fa-caret-right mr-1"></i>
                                                 <p>{{__('AR Invoices')}}</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="notas/favoritas" class="{{ Request::path() === 'notas/favoritas' ? 'nav-link active' : 'nav-link' }} ml-3">
-                                                <i class="nav-icon fas fa-caret-right"></i>
+                                                <i class="fas fa-caret-right mr-1"></i>
                                                 <p>AP Invoices</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="notas/archivadas" class="{{ Request::path() === 'notas/archivadas' ? 'nav-link active' : 'nav-link'  }} ml-3">
-                                                <i class="nav-icon fas fa-caret-right"></i>
+                                                <i class="fas fa-caret-right mr-1"></i>
                                                 <p>PayRolls</p>
                                             </a>
                                         </li>
@@ -145,7 +144,7 @@
                                 <!-- Admin tools -->
                                 <li class="{{in_array(explode('/', str_ireplace(array('http://', 'https://'), '', Request::path()))[0], array('users','permissions','roles', 'config')) ? 'nav-item has-treeview menu-is-opening menu-open' : 'nav-item has-treeview' }}">
                                     <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-users-cog"></i>
+                                        <i class="fas fa-users-cog mr-1"></i>
                                         <p>Admin tools<i class="fas fa-angle-left right"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
@@ -154,7 +153,7 @@
                                         ])
                                         <li class="nav-item">
                                             <a href="/users" class="{{ Request::path() === 'users' ? 'nav-link active' : 'nav-link' }}">
-                                                <i class="nav-icon fas fa-users ml-3"></i>
+                                                <i class="fas fa-users ml-3 mr-1"></i>
                                                 <p>Users</p>
                                             </a>
                                         </li>
@@ -164,7 +163,7 @@
                                         ])
                                         <li class="nav-item">
                                             <a href="/permissions" class="{{ Request::path() === 'permissions' ? 'nav-link active' : 'nav-link' }}">
-                                                <i class="nav-icon fas fas fa-tasks ml-3"></i>
+                                                <i class="fas fas fa-tasks ml-3 mr-1"></i>
                                                 <p>Permissions</p>
                                             </a>
                                         </li>
@@ -174,7 +173,7 @@
                                         ])
                                         <li class="nav-item">
                                             <a href="/roles" class="{{ Request::path() === 'roles' ? 'nav-link active' : 'nav-link' }} ">
-                                                <i class="nav-icon fas fa-address-card ml-3"></i>
+                                                <i class="fas fa-address-card ml-3 mr-1"></i>
                                                 <p>Profiles</p>
                                                 <!-- $count = ::where('name', '!=', 'SuperAdmin')->get()->count(); ?>
                                                 <span class="right badge badge-info">{{ $count ?? '0' }}</span> -->
@@ -186,7 +185,7 @@
                                         ])
                                         <li class="nav-item">
                                             <a href="/config" class="{{ Request::path() === 'config' ? 'nav-link active' : 'nav-link' }} ">
-                                                <i class="nav-icon fas fa-cogs ml-3"></i>
+                                                <i class="fas fa-cogs ml-3"></i>
                                                 <p>Configurations</p>
                                             </a>
                                         </li>

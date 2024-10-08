@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<form action="{{route('globalconfigs.update', $object->id)}}" method="POST">
+<form action="{{route('parsertemplates.update', $object->id)}}" method="POST">
 @method('PATCH')
 @csrf
     <!-- Content Header (Page header) -->
@@ -15,7 +15,7 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6 float-sm-right">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><button type="reset" class="btn btn-light btn-sm"><a href="/config/globalconfigs" style="color: rgba(0, 0, 0, 0.9);"><i class="fas fa-arrow-left"></i> Back</a></button></li>
+                                <li class="breadcrumb-item"><button type="reset" class="btn btn-light btn-sm"><a href="/config/parsertemplates" style="color: rgba(0, 0, 0, 0.9);"><i class="fas fa-arrow-left"></i> Back</a></button></li>
                                 <li class="breadcrumb-item"><button type="submit" class="btn btn-light btn-sm"><i class="far fa-save"></i> Save</button></li>
                             </ol>
                         </div><!-- /.col -->
@@ -70,27 +70,6 @@
                                     </div>  
                                     <div class="col-2">
                                         <input type="text" class="form-control" name="value" value="{{$object->value}}" placeholder="Type your value.">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-group row">
-                                    <div class="col-2">
-                                        <label for="type" class="form-label">Type</label>
-                                    </div>  
-                                    <div class="col-1">
-                                        <select name="type">
-                                            <option value="">-</option>
-                                            @if ($object->data_type == "string") <option value="string" selected>String</option>
-                                            @else <option value="string">String</option>
-                                            @endif
-                                            @if ($object->data_type == "integer") <option value="integer" selected>Integer</option>
-                                            @else <option value="integer">Integer</option>
-                                            @endif
-                                            @if ($object->data_type == "datetime") <option value="datetime" selected>Datetime</option>
-                                            @else <option value="datetime">Datetime</option>
-                                            @endif
-                                        </select>
                                     </div>
                                 </div>
                             </div>

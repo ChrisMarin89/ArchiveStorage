@@ -8,7 +8,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h6 class="mt-2">Global Configurations ({{count($objects)}})</h6>
+                            <h6 class="mt-2">Parser Templates ({{count($objects)}})</h6>
                         </div><!-- /.col -->
                         <div class="col-sm-6 float-sm-right">
                             <ol class="breadcrumb float-sm-right">
@@ -32,11 +32,9 @@
                         <tr>
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Value</th>
-                            <th scope="col">Type</th>
                             <th scope="col" class="text-right">
                                 Options
-                                <a href="{{route('globalconfigs.create')}}">
+                                <a href="{{route('parsertemplates.create')}}">
                                     <button type="button" class="btn btn-light btn-sm py-0" ><i class="fas fa-plus"></i></button>
                                 </a>
                             </th>
@@ -46,19 +44,15 @@
                                 @if($search)
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search" value="{{$search['name']}}"></td>
                                     <td><input class="form-control form-control-sm" name="description" type="search" placeholder="Filter" aria-label="Search" value="{{$search['description']}}"></td>
-                                    <td><input class="form-control form-control-sm" name="value" type="search" placeholder="Filter" aria-label="Search" value="{{$search['value']}}"></td>
-                                    <td><input class="form-control form-control-sm" name="type" type="search" placeholder="Filter" aria-label="Search" value="{{$search['type']}}"></td>
                                     <td></td>
                                 @else
                                     <td><input class="form-control form-control-sm" name="name" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td><input class="form-control form-control-sm" name="description" type="search" placeholder="Filter" aria-label="Search"></td>
-                                    <td><input class="form-control form-control-sm" name="value" type="search" placeholder="Filter" aria-label="Search"></td>
-                                    <td><input class="form-control form-control-sm" name="type" type="search" placeholder="Filter" aria-label="Search"></td>
                                     <td></td>
                                 @endif
                                     <td class="text-right">
                                         <button class="btn btn-light btn-sm" type="submit"><i class="fas fa-filter"></i></button>
-                                        <button type="reset" class="btn btn-light btn-sm"><a href="/config/globalconfigs" style="color: rgba(0, 0, 0, 0.9);">Clear</a></button>
+                                        <button type="reset" class="btn btn-light btn-sm"><a href="/config/parsertemplates" style="color: rgba(0, 0, 0, 0.9);">Clear</a></button>
                                     </td>
                             </form>
                         </tr>
@@ -66,12 +60,10 @@
                     <tbody>
                         @foreach($objects as $object)
                             <tr>
-                                <td><a href="{{route('globalconfigs.edit', $object->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$object->name}}</a></td>
-                                <td><a href="{{route('globalconfigs.edit', $object->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$object->description}}</a></td>
-                                <td><a href="{{route('globalconfigs.edit', $object->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$object->value}}</a></td>
-                                <td><a href="{{route('globalconfigs.edit', $object->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$object->data_type}}</a></td>
+                                <td><a href="{{route('parsertemplates.edit', $object->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$object->name}}</a></td>
+                                <td><a href="{{route('parsertemplates.edit', $object->id)}}" style="color: rgba(0, 0, 0, 0.9);">{{$object->description}}</a></td>
                                 <td class="text-right">
-                                    <form action="{{route('globalconfigs.destroy', $object->id)}}" method="POST">
+                                    <form action="{{route('parsertemplates.destroy', $object->id)}}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-light btn-sm py-0"><i class="fas fa-trash-alt"></i></button>

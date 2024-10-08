@@ -29,7 +29,7 @@
             <div class="card-header"><p class="h6 text-center font-weight-bold">Settings</p></div> 
             <div class="card-body">
                 <a href="/config/globalconfigs" style="color: rgba(0, 0, 0, 0.9);"><p>- Global Configurations</p></a>
-                <p>- Parser Templates (Json)</p>
+                <a href="/config/parsertemplates" style="color: rgba(0, 0, 0, 0.9);"><p>- Parser Templates (Json)</p></a>
             </div>
         </div>
         <div class="card m-2" style="width: 18rem;">

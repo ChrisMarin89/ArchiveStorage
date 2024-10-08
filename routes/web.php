@@ -25,6 +25,7 @@ Route::resource('/roles', 'RoleController');
 Route::resource('/permissions', 'PermissionController');
 
 Route::resource('/config/globalconfigs', 'GlobalConfigurationController');
+Route::resource('/config/parsertemplates', 'ParserTemplateController');
 
 /* Complete example of main CRUD
 Route::get('/users', 'UserController@index')->name('users.index')->middleware('permission:app-users-create|app-users-read|app-users-update|app-users-delete');

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GlobalConfigurationFormRequest;
-use App\Models\GlobalConfiguration;
+use App\Http\Requests\ParserTemplateFormRequest;
+use App\Models\ParserTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class GlobalConfigurationController extends Controller
+class ParserTemplateController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
@@ -23,22 +23,14 @@ class GlobalConfigurationController extends Controller
     {
         $search['name'] = trim($request->get('name'));
         $search['description'] = trim($request->get('description'));
-        $search['value'] = trim($request->get('value'));
-        $search['type'] = trim($request->get('type'));
 
         if(is_null($search['name']) || $search['name'] == '') $search['name'] = '%';
         else $search['name'] = str_replace('*', '%', $search['name']);
         if(is_null($search['description']) || $search['description'] == '') $search['description'] = '%';
         else $search['description'] = str_replace('*', '%', $search['description']);
-        if(is_null($search['value']) || $search['value'] == '') $search['value'] = '%';
-        else $search['value'] = str_replace('*', '%', $search['value']);
-        if(is_null($search['type']) || $search['type'] == '') $search['type'] = '%';
-        else $search['type'] = str_replace('*', '%', $search['type']);
 
-        $objects = GlobalConfiguration::where('name', 'LIKE', $search['name'])
+        $objects = ParserTemplate::where('name', 'LIKE', $search['name'])
                             ->where('description', 'LIKE', $search['description'])
-                            ->where('value', 'LIKE', $search['value'])
-                            ->where('data_type', 'LIKE', $search['type'])
                             ->orderBy('name', 'asc')
                             ->paginate(15);
 
@@ -46,12 +38,8 @@ class GlobalConfigurationController extends Controller
         else $search['name'] = str_replace('%', '*', $search['name']);
         if($search['description'] == '%') $search['description'] = '';
         else $search['description'] = str_replace('%', '*', $search['description']);  
-        if($search['value'] == '%') $search['value'] = '';
-        else $search['value'] = str_replace('%', '*', $search['value']);  
-        if($search['type'] == '%') $search['type'] = '';
-        else $search['type'] = str_replace('%', '*', $search['type']);  
 
-        return view('config.globalconfigs.index', ['objects' => $objects, 'search' => $search]);
+        return view('config.parsertemplates.index', ['objects' => $objects, 'search' => $search]);
     }
 
     /**
@@ -61,7 +49,7 @@ class GlobalConfigurationController extends Controller
      */
     public function create()
     {
-        return view('config.globalconfigs.create'); 
+        return view('config.parsertemplates.create'); 
     }
 
     /**
@@ -70,74 +58,72 @@ class GlobalConfigurationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(GlobalConfigurationFormRequest $request)
+    public function store(ParserTemplateFormRequest $request)
     {
-        $object = new GlobalConfiguration();
+        $object = new ParserTemplate();
         $object->name = request('name');
         $object->description = request('description');
         $object->value = request('value');
-        $object->data_type = request('type');
         $author = is_object(Auth::user()) ? Auth::user()->email : 'System';
         $object->created_by = $author;
         $object->updated_by = $author;
         $object->save();
 
-        return redirect('/config/globalconfigs');
+        return redirect('/config/parsertemplates');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\GlobalConfiguration  $globalConfiguration
+     * @param  \App\Models\ParserTemplate  $parserTemplate
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return redirect('/config/globalconfigs');
+        return redirect('/config/parsertemplates');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\GlobalConfiguration  $globalConfiguration
+     * @param  \App\Models\ParserTemplate  $parserTemplate
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        return view('config.globalconfigs.edit', ['object' => GlobalConfiguration::findOrFail($id)]); 
+        return view('config.parsertemplates.edit', ['object' => ParserTemplate::findOrFail($id)]); 
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\GlobalConfiguration  $globalConfiguration
+     * @param  \App\Models\ParserTemplate  $parserTemplate
      * @return \Illuminate\Http\Response
      */
-    public function update(GlobalConfigurationFormRequest $request, $id)
+    public function update(ParserTemplateFormRequest $request, $id)
     {
-        $object = GlobalConfiguration::findOrFail($id);
+        $object = ParserTemplate::findOrFail($id);
 
         $object->description = $request->get('description');
         $object->value = $request->get('value');
-        $object->data_type = $request->get('type');
         $object->updated_by = is_object(Auth::user()) ? Auth::user()->email : 'System';
         $object->update();
         
 
-        return redirect('/config/globalconfigs');
+        return redirect('/config/parsertemplates');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\GlobalConfiguration  $globalConfiguration
+     * @param  \App\Models\ParserTemplate  $parserTemplate
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $object = GlobalConfiguration::findOrFail($id);
+        $object = ParserTemplate::findOrFail($id);
         $object->delete();
-        return redirect('/config/globalconfigs');
+        return redirect('/config/parsertemplates');
     }
 }

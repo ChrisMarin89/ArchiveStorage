@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PermissionFormRequest extends FormRequest
+class ParserTemplateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,18 @@ class PermissionFormRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->permission)   
+        //dd($this->parsertemplate);
+        if($this->parsertemplate)  
             return [
-                'name' => 'required|max:255|unique:permissions,name,' . $this->permission,
+                'name' => 'required|max:255|without_spaces|unique:global_configurations,name,' . $this->parsertemplate,
                 'description' => 'max:255',
+                'value' => 'required',
             ];
         else 
             return [
-                'name' => 'required|max:255|unique:permissions,name',
+                'name' => 'required|max:255|without_spaces|unique:global_configurations,name',
                 'description' => 'max:255',
+                'value' => 'required',
             ];
     }
 }
